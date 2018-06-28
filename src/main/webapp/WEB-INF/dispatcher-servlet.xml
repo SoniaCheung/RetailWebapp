@@ -23,4 +23,9 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 
+	<bean id="emf" class="javax.persistence.Persistence"
+		factory-method="createEntityManagerFactory">
+		<constructor-arg value="jpa_retail_webapp_project" />
+	</bean>
+
 </beans>
