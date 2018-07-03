@@ -20,13 +20,18 @@ http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
 
 			<!-- Connection config -->
-			<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
-			<property name="hibernate.connection.url" value="jdbc:mysql://sql12.freemysqlhosting.net:3306/sql12206048" />
-			<property name="hibernate.connection.username" value="sql12206048" />
-			<property name="hibernate.connection.password" value="gEJIWm7h12" />
+<!-- 			<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" /> -->
+<!-- 			<property name="hibernate.connection.url" value="jdbc:mysql://sql12.freemysqlhosting.net:3306/sql12206048" /> -->
+<!-- 			<property name="hibernate.connection.username" value="sql12206048" /> -->
+<!-- 			<property name="hibernate.connection.password" value="gEJIWm7h12" /> -->
+			<property name="hibernate.connection.driver_class" value="oracle.jdbc.driver.OracleDriver" />
+			<property name="hibernate.connection.url"
+				value="jdbc:oracle:thin:@10.8.9.54:1521:xe" />
+			<property name="hibernate.connection.username" value="trainee1" />
+			<property name="hibernate.connection.password" value="!QAZSE4" />	
 
 			<!-- validate, create, create-drop, update -->
-			<property name="hibernate.hbm2ddl.auto" value="update" />
+<!-- 			<property name="hibernate.hbm2ddl.auto" value="update" /> -->
 
 			<!-- Connection pooling config -->
 			<property name="hibernate.c3p0.min_size" value="2" />
