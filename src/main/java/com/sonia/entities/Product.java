@@ -2,14 +2,35 @@ package com.sonia.entities;
 
 import java.util.List;
 
-public class Product implements GenericEntity{
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
-	private long id;
+@Entity
+@Table(name="RWA_PRODUCT")
+public class Product implements GenericEntity{
+	
+	@Id
+	@GeneratedValue
+	@Column(name = "product_id")
+	private int id;
+	@Column(name="product_name")
 	private String productName;
+	@Column(name="product_description")
 	private String productDescription;
+	@Column(name="stock")
 	private int stock;
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "productList")
 	private List<Category> categoryList;
 	
+	public Product() {
+		super();
+	}
+
 	public Product(String productName, String productDescription, int stock, List<Category> categoryList) {
 		super();
 		this.productName = productName;
@@ -18,10 +39,10 @@ public class Product implements GenericEntity{
 		this.categoryList = categoryList;
 	}
 	
-	public long getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public String getProductName() {

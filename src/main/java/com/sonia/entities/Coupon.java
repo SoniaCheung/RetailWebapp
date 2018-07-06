@@ -1,21 +1,43 @@
 package com.sonia.entities;
 
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="RWA_COUPON")
 public class Coupon implements GenericEntity{
 
-	private long id;
+	@Id
+	@GeneratedValue
+	@Column(name = "coupon_id")
+	private int id;
+	@Column(name="coupon_code")
 	private String couponCode;
+	@Column(name="coupon_rate")
 	private double couponRate;
+	@OneToMany(mappedBy = "coupon")
+	private List<Order> orderWhichUsedCoupon;
 	
+	public Coupon() {
+		super();
+	}
+
 	public Coupon(String couponCode, double couponRate) {
 		super();
 		this.couponCode = couponCode;
 		this.couponRate = couponRate;
 	}
 	
-	public long getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public String getCouponCode() {

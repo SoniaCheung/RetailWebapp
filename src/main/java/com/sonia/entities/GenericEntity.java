@@ -2,7 +2,7 @@ package com.sonia.entities;
 
 public interface GenericEntity {
 
-	public long getId();
+	public int getId();
 	
-	public void setId(long id);
+	public void setId(int id);
 }

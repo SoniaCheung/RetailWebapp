@@ -2,15 +2,41 @@ package com.sonia.entities;
 
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="RWA_ORDER")
 public class Order implements GenericEntity{
 
-	private long id;
+	@Id
+	@GeneratedValue
+	@Column(name = "order_id")
+	private int id;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="user_id")
 	private User user;
+	@OneToMany(mappedBy = "order")
 	private List<OrderedProduct> orderedProductList;
+	@Column(name="delivery_address")
 	private String deliveryAddress;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="coupon_id")
 	private Coupon coupon;
+	@Column(name="remarks")
 	private String remarks;
 	
+	public Order() {
+		super();
+	}
+
 	public Order(User user, List<OrderedProduct> orderedProductList, String deliveryAddress, Coupon coupon,
 			String remarks) {
 		super();
@@ -21,10 +47,10 @@ public class Order implements GenericEntity{
 		this.remarks = remarks;
 	}
 	
-	public long getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public User getUser() {

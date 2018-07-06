@@ -27,5 +27,7 @@
 		factory-method="createEntityManagerFactory">
 		<constructor-arg value="jpa_retail_webapp_project" />
 	</bean>
+	
+	<bean id="userDao" class="com.sonia.daos.UserDao" />
 
 </beans>

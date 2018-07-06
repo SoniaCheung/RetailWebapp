@@ -2,13 +2,33 @@ package com.sonia.entities;
 
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="RWA_USER")
 public class User implements GenericEntity{
 
-	private long id;
+	@Id
+	@GeneratedValue
+	@Column(name = "user_id")
+	private int id;
+	@Column(name="username")
 	private String username;
+	@Column(name="password")
 	private String password;
+	@Column(name="address")
 	private String address;
+	@OneToMany(mappedBy = "user")
 	private List<Order>orderList;
+	
+	public User() {
+		super();
+	}
 	
 	public User(String username, String password, String address, List<Order> orderList) {
 		super();
@@ -17,10 +37,10 @@ public class User implements GenericEntity{
 		this.address = address;
 		this.orderList = orderList;
 	}
-	public long getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public String getUsername() {
