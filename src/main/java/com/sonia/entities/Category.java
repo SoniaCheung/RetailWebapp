@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
@@ -22,7 +23,7 @@ public class Category implements GenericEntity {
 	private int id;
 	@Column(name = "category_name")
 	private String categoryName;
-	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "category_product", joinColumns = { 
 			@JoinColumn(name = "category_id") }, 
 			inverseJoinColumns = { @JoinColumn(name = "product_id") })

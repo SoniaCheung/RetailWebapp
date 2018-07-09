@@ -20,14 +20,14 @@ public class Order implements GenericEntity{
 	@GeneratedValue
 	@Column(name = "order_id")
 	private int id;
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="user_id")
 	private User user;
-	@OneToMany(mappedBy = "order")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "order")
 	private List<OrderedProduct> orderedProductList;
 	@Column(name="delivery_address")
 	private String deliveryAddress;
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="coupon_id")
 	private Coupon coupon;
 	@Column(name="remarks")

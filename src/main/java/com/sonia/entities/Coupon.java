@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -21,7 +22,7 @@ public class Coupon implements GenericEntity{
 	private String couponCode;
 	@Column(name="coupon_rate")
 	private double couponRate;
-	@OneToMany(mappedBy = "coupon")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "coupon")
 	private List<Order> orderWhichUsedCoupon;
 	
 	public Coupon() {

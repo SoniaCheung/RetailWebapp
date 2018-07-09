@@ -24,8 +24,11 @@ public class Product implements GenericEntity{
 	private String productDescription;
 	@Column(name="stock")
 	private int stock;
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "productList")
+	@Column(name="price")
+	private double price;
+	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "productList")
 	private List<Category> categoryList;
+	
 	
 	public Product() {
 		super();
@@ -62,6 +65,12 @@ public class Product implements GenericEntity{
 	}
 	public void setStock(int stock) {
 		this.stock = stock;
+	}
+	public double getPrice() {
+		return price;
+	}
+	public void setPrice(double price) {
+		this.price = price;
 	}
 	public List<Category> getCategoryList() {
 		return categoryList;
