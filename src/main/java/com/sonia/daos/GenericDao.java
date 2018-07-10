@@ -55,7 +55,7 @@ public class GenericDao<T extends GenericEntity> {
 		cleanUp();
 	}
 	
-	public T addEntity(T entity){
+	public T addOrUpdateEntity(T entity){
 		setUp();
 		em.getTransaction().begin();
 		T mergedEntity = em.merge(entity);
@@ -63,11 +63,4 @@ public class GenericDao<T extends GenericEntity> {
 		return mergedEntity;
 	}
 	
-	public T updateEntity(T entity){
-		setUp();
-		em.getTransaction().begin();
-		T updatedEntity = em.merge(entity);
-		cleanUp();
-		return updatedEntity;
-	};
 }
