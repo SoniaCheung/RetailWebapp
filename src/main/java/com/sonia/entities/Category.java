@@ -23,7 +23,7 @@ public class Category implements GenericEntity {
 	@Column(name = "category_name")
 	private String categoryName;
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "category_product", joinColumns = { 
+	@JoinTable(name = "RWA_CATEGORY_PRODUCT", joinColumns = { 
 			@JoinColumn(name = "category_id") }, 
 			inverseJoinColumns = { @JoinColumn(name = "product_id") })
 	private List<Product> productList;

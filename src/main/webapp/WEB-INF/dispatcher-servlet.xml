@@ -34,4 +34,11 @@
 	<bean id="orderedProductDao" class="com.sonia.daos.OrderedProductDao" />
 	<bean id="productDao" class="com.sonia.daos.ProductDao" />
 	<bean id="userDao" class="com.sonia.daos.UserDao" />
+	
+	<bean id="categoryFactory" class="com.sonia.factories.CategoryFactory" />
+	<bean id="couponFactory" class="com.sonia.factories.CouponFactory" />
+	<bean id="orderedProductFactory" class="com.sonia.factories.OrderedProductFactory" />
+	<bean id="orderFactory" class="com.sonia.factories.OrderFactory" />
+	<bean id="productFactory" class="com.sonia.factories.ProductFactory" />
+	<bean id="userFactory" class="com.sonia.factories.UserFactory" />
 </beans>
