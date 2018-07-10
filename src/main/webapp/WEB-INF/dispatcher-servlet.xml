@@ -28,6 +28,10 @@
 		<constructor-arg value="jpa_retail_webapp_project" />
 	</bean>
 	
+	<bean id="categoryDao" class="com.sonia.daos.CategoryDao" />
+	<bean id="couponDao" class="com.sonia.daos.CouponDao" />
+	<bean id="orderDao" class="com.sonia.daos.OrderDao" />
+	<bean id="orderedProductDao" class="com.sonia.daos.OrderedProductDao" />
+	<bean id="productDao" class="com.sonia.daos.ProductDao" />
 	<bean id="userDao" class="com.sonia.daos.UserDao" />
-
 </beans>
