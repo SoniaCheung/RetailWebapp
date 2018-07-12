@@ -27,5 +27,20 @@
 		factory-method="createEntityManagerFactory">
 		<constructor-arg value="jpa_retail_webapp_project" />
 	</bean>
-
+	
+	<bean id="categoryDao" class="com.sonia.daos.CategoryDao" />
+	<bean id="couponDao" class="com.sonia.daos.CouponDao" />
+	<bean id="orderDao" class="com.sonia.daos.OrderDao" />
+	<bean id="orderedProductDao" class="com.sonia.daos.OrderedProductDao" />
+	<bean id="productDao" class="com.sonia.daos.ProductDao" />
+	<bean id="productImageDao" class="com.sonia.daos.ProductImageDao" />
+	<bean id="userDao" class="com.sonia.daos.UserDao" />
+	
+	<bean id="categoryFactory" class="com.sonia.factories.CategoryFactory" />
+	<bean id="couponFactory" class="com.sonia.factories.CouponFactory" />
+	<bean id="orderedProductFactory" class="com.sonia.factories.OrderedProductFactory" />
+	<bean id="orderFactory" class="com.sonia.factories.OrderFactory" />
+	<bean id="productFactory" class="com.sonia.factories.ProductFactory" />
+	<bean id="productImageFactory" class="com.sonia.factories.ProductImageFactory" />
+	<bean id="userFactory" class="com.sonia.factories.UserFactory" />
 </beans>
