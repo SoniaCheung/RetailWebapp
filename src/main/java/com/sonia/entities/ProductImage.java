@@ -19,17 +19,17 @@ public class ProductImage implements GenericEntity{
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="product_id")
 	private Product product;
-	@Column
-	private String image_link;
+	@Column(name = "image_link")
+	private String imageLink;
 	
 	public ProductImage() {
 		super();
 	}
 	
-	public ProductImage(Product product, String image_link) {
+	public ProductImage(Product product, String imageLink) {
 		super();
 		this.product = product;
-		this.image_link = image_link;
+		this.imageLink = imageLink;
 	}
 
 
@@ -45,10 +45,10 @@ public class ProductImage implements GenericEntity{
 	public void setProduct(Product product) {
 		this.product = product;
 	}
-	public String getImage_link() {
-		return image_link;
+	public String getImageLink() {
+		return imageLink;
 	}
-	public void setImage_link(String image_link) {
-		this.image_link = image_link;
+	public void setImageLink(String image_link) {
+		this.imageLink = image_link;
 	}
 }
