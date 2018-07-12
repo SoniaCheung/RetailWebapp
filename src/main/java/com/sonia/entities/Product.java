@@ -8,6 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -26,6 +27,8 @@ public class Product implements GenericEntity{
 	private int stock;
 	@Column(name="price")
 	private double price;
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "product")
+	private List<ProductImage> productImageList;
 	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "productList")
 	private List<Category> categoryList;
 	
@@ -72,6 +75,15 @@ public class Product implements GenericEntity{
 	public void setPrice(double price) {
 		this.price = price;
 	}
+	
+	public List<ProductImage> getProductImageList() {
+		return productImageList;
+	}
+
+	public void setProductImageList(List<ProductImage> productImageList) {
+		this.productImageList = productImageList;
+	}
+
 	public List<Category> getCategoryList() {
 		return categoryList;
 	}
