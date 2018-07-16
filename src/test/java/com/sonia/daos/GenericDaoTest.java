@@ -36,7 +36,7 @@ public class GenericDaoTest {
 		MockitoAnnotations.initMocks(this);
 	}
 	
-	public void setupEntityManagerMock(){
+	private void setupEntityManagerMock(){
 		when(emf.createEntityManager()).thenReturn(em);
 		when(em.getTransaction()).thenReturn(et);
 	}
