@@ -36,15 +36,18 @@ public class Product implements GenericEntity{
 	public Product() {
 		super();
 	}
-
-	public Product(String productName, String productDescription, int stock, List<Category> categoryList) {
+	
+	public Product(String productName, String productDescription, int stock, double price,
+			List<ProductImage> productImageList, List<Category> categoryList) {
 		super();
 		this.productName = productName;
 		this.productDescription = productDescription;
 		this.stock = stock;
+		this.price = price;
+		this.productImageList = productImageList;
 		this.categoryList = categoryList;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
