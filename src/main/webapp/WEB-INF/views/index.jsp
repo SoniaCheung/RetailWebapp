@@ -6,28 +6,59 @@
 <link href="./resources/css/bootstrap.css" rel="stylesheet">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Index</title>
+<title>Buy Now!</title>
 </head>
+
 <body>
-	<h3>Index Page</h3>
+	<!-- navigation bar -->
+	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+	  <!-- Logo image (Buy Now) -->
+		<img src="http://keyursavaliya.com/wp-content/uploads/2017/08/buynow-logo-web-hostingpng.png"
+		       			width="175" height="75" hspace="20"/>
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+	    <span class="navbar-toggler-icon"></span>
+	  </button>
+	
+	  <div class="collapse navbar-collapse" id="navbarColor01">
+	    <ul class="navbar-nav mr-auto">
+	      <li class="nav-item active">
+	        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="#">Features</a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="#">Pricing</a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="#">About</a>
+	      </li>
+	    </ul>
+	    <form class="form-inline my-2 my-lg-0">
+	      <input class="form-control mr-sm-2" type="text" placeholder="Search">
+	      <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+	    </form>
+	  </div>
+	</nav>
+	<!-- table for listing all products -->
+	<table style="width:70%;margin-left:15%;margin-right:15%;">
+	  <tbody>
+	  	<tr>
+		     <c:forEach items="${indexProductBasicDisaplays}" var="ipbd" varStatus="loop">
+		       <c:if test="${not loop.first and loop.index % 3 == 0}"> 
+		            		</tr>
+		            <tr>
+		       </c:if>
+		       	<td style="padding: 5px 10px 5px 5px; align=center">
+		       		<img src="${ipbd.thumbnail}" onerror="this.src='http://www.wellesleysocietyofartists.org/wp-content/uploads/2015/11/image-not-found.jpg'"
+		       			width="200" height="200" /> <br>
+					${ipbd.productName}<br>
+					 ${ipbd.price}<br>
+		             ${ipbd.thumbnail}<br>
+		       	</td>
+		     </c:forEach>
+	     </tr>
+	  </tbody>
+	</table>
 </body>
-<table style="width:70%;margin-left:15%;margin-right:15%;">
-  <tbody>
-  	<tr>
-	     <c:forEach items="${indexProductBasicDisaplays}" var="ipbd" varStatus="loop">
-	       <c:if test="${not loop.first and loop.index % 3 == 0}"> 
-	            		</tr>
-	            <tr>
-	       </c:if>
-	       	<td style="padding: 5px 10px 5px 5px; align=center">
-	       		<img src="${ipbd.thumbnail}" onerror="this.src='http://www.wellesleysocietyofartists.org/wp-content/uploads/2015/11/image-not-found.jpg'"
-	       			width="200" height="200" /> <br>
-				${ipbd.productName}<br>
-				 ${ipbd.price}<br>
-	             ${ipbd.thumbnail}<br>
-	       	</td>
-	     </c:forEach>
-     </tr>
-  </tbody>
-</table>
 </html>
