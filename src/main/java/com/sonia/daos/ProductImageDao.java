@@ -14,11 +14,13 @@ public class ProductImageDao extends GenericDao<ProductImage>{
 	}
 	
 	public List<ProductImage> listProductImagesByProductId(int productId) {
+		super.em = super.emf.createEntityManager();
+		
 		List<ProductImage> myList = new ArrayList<>();
 		String query = "SELECT t FROM ProductImage t WHERE product_id = " + productId;
-		TypedQuery<ProductImage> q1 = em.createQuery(query, ProductImage.class);
+		TypedQuery<ProductImage> q1 = super.em.createQuery(query, ProductImage.class);
 		myList = q1.getResultList();
-		em.close();
+		super.em.close();
 		return myList;	
 	}
 }
