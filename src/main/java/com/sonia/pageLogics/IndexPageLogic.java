@@ -44,6 +44,13 @@ public class IndexPageLogic {
 		return setDisplayProdutsByProductList(displayCategoryProducts, categoryProducts);
 	}
 	
+	public List<IndexPageBasicProductDisplay> getIndexPageBasicDisplayObjectsBySearchKey(String searchKeyword) {
+		List<IndexPageBasicProductDisplay> allDisplayProducts = new ArrayList<>();
+		List<Product> products = productDao.listEntities();
+		List<Product> filteredProducts = filteredProductListByKeyword(products, searchKeyword);
+		return setDisplayProdutsByProductList(allDisplayProducts, filteredProducts);
+	}
+	
 	private List<IndexPageBasicProductDisplay> setDisplayProdutsByProductList(List<IndexPageBasicProductDisplay> displayProducts, List<Product> products){
 		for(Product p : products) {
 			int productId = p.getId();
@@ -61,4 +68,13 @@ public class IndexPageLogic {
 		
 	}
 
+	private List<Product> filteredProductListByKeyword(List<Product> products, String keyword){
+		List<Product> filteredProducts = new ArrayList<>();
+		for (Product p : products) {
+			if (p.getProductName().contains(keyword) || p.getProductDescription().contains(keyword)) {
+				filteredProducts.add(p);
+			}
+		}
+		return filteredProducts;
+	}
 }

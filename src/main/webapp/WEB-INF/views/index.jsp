@@ -5,6 +5,13 @@
 <html>
 <link href="./resources/css/bootstrap.css" rel="stylesheet">
 <head>
+<script type="text/javascript">
+	function submitSearch(){
+	    var search_src = "find?" + document.getElementsByName("searchKeyword")[0].value;
+	    var search_form = document.getElementById('searchForm');
+	    search_form.action = search_src ;
+	}
+</script>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Buy Now!</title>
 </head>
@@ -36,8 +43,8 @@
 	      <li class="nav-item">
 	        <a class="nav-link" href="#">About</a>
 	    </ul>
-	    <form class="form-inline my-2 my-lg-0">
-	      <input class="form-control mr-sm-2" type="text" placeholder="Search">
+	    <form id="searchForm" class="form-inline my-2 my-lg-0" onsubmit="submitSearch()">
+	      <input name="searchKeyword" class="form-control mr-sm-2" type="text" placeholder="Search for name or description">
 	      <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
 	    </form>
 	  </div>

@@ -20,16 +20,24 @@ public class IndexController {
 	
 	@RequestMapping(value="/")
 	public String goToIndex(HttpServletRequest request){
-		List<IndexPageBasicProductDisplay> indexProductBasicDisaplays = indexPageLogic.getAllIndexPageBasicDisplayObjects();
-		request.setAttribute("indexProductBasicDisaplays", indexProductBasicDisaplays);
-		return "index";
+		List<IndexPageBasicProductDisplay> allDisplayProducts = indexPageLogic.getAllIndexPageBasicDisplayObjects();
+		return setIndexProductBasicDisaplays(request, allDisplayProducts);
 	}
 
 	@RequestMapping(value = "/category")
 	public String goToCategory(@RequestParam("categoryName") String categoryName, HttpServletRequest request) {
-		List<IndexPageBasicProductDisplay> indexProductBasicDisaplays = indexPageLogic.getIndexPageBasicDisplayObjectsByCategory(categoryName);
-		request.setAttribute("indexProductBasicDisaplays", indexProductBasicDisaplays);
-		return "index";
+		List<IndexPageBasicProductDisplay> categoryDisplayProducts = indexPageLogic.getIndexPageBasicDisplayObjectsByCategory(categoryName);
+		return setIndexProductBasicDisaplays(request, categoryDisplayProducts);
 	}
 
+	@RequestMapping(value = "/find")
+	public String findProducts(@RequestParam("searchKeyword") String keyword, HttpServletRequest request) {
+		List<IndexPageBasicProductDisplay> searchDisplayProducts = indexPageLogic.getIndexPageBasicDisplayObjectsBySearchKey(keyword);
+		return setIndexProductBasicDisaplays(request, searchDisplayProducts);
+	}
+	
+	private String setIndexProductBasicDisaplays(HttpServletRequest request, List<IndexPageBasicProductDisplay> data) {
+		request.setAttribute("indexProductBasicDisaplays", data);
+		return "index";
+	}
 }

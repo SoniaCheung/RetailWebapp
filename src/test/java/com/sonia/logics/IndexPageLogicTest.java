@@ -47,12 +47,19 @@ public class IndexPageLogicTest {
 	
 	
 	int productId = 101;
-	String productName = "Product1";
+	String productName = "product1";
 	double price = 20.2;
+	String productDescription = "This is a demo product description";
 	String thumbnailLink = "mock thumbnail link";
 	String productImage2 = "mock product image two";
 	
 	String categoryName = "clothing";
+	
+	String searchKeyword1 = "1";
+	String searchKeyword2 = "demo";
+	String searchKeyword3 = "product";
+	String searchKeyword4 = "hello";
+	
 	
 	@Before
 	public void setup() {
@@ -79,7 +86,46 @@ public class IndexPageLogicTest {
 		verify(indexPageBasicProductDisplayFactory).createIndexPageBasicProductDisplay(productId, productName, price, thumbnailLink);
 		assertEquals(1, result.size());
 	}
+	
+	@Test
+	public void getIndexPageBasicDisplayObjectsBySearchKey_should_search_for_product_name_and_desacription_then_return_an_array_of_IndexPageBasicProductDisplay_if_product_name_matches() {
+		setupDaosReturnForProducts();
+		
+		List<IndexPageBasicProductDisplay> result =  indexPageLogic.getIndexPageBasicDisplayObjectsBySearchKey(searchKeyword1);
+		verify(productDao).listEntities();
+		verify(indexPageBasicProductDisplayFactory).createIndexPageBasicProductDisplay(productId, productName, price, thumbnailLink);
+		assertEquals(1, result.size());
+	}
 
+	@Test
+	public void getIndexPageBasicDisplayObjectsBySearchKey_should_search_for_product_name_and_desacription_then_return_an_array_of_IndexPageBasicProductDisplay_if_product_description_matches() {
+		setupDaosReturnForProducts();
+		
+		List<IndexPageBasicProductDisplay> result =  indexPageLogic.getIndexPageBasicDisplayObjectsBySearchKey(searchKeyword2);
+		verify(productDao).listEntities();
+		verify(indexPageBasicProductDisplayFactory).createIndexPageBasicProductDisplay(productId, productName, price, thumbnailLink);
+		assertEquals(1, result.size());
+	}
+	
+	@Test
+	public void getIndexPageBasicDisplayObjectsBySearchKey_should_search_for_product_name_and_desacription_then_return_an_array_of_IndexPageBasicProductDisplay_if_product_name_and_description_match() {
+		setupDaosReturnForProducts();
+		
+		List<IndexPageBasicProductDisplay> result =  indexPageLogic.getIndexPageBasicDisplayObjectsBySearchKey(searchKeyword3);
+		verify(productDao).listEntities();
+		verify(indexPageBasicProductDisplayFactory).createIndexPageBasicProductDisplay(productId, productName, price, thumbnailLink);
+		assertEquals(1, result.size());
+	}
+	
+	@Test
+	public void getIndexPageBasicDisplayObjectsBySearchKey_should_return_empty_list_if_no_product_match_with_the_search_keyword() {
+		setupDaosReturnForProducts();
+		
+		List<IndexPageBasicProductDisplay> result =  indexPageLogic.getIndexPageBasicDisplayObjectsBySearchKey(searchKeyword4);
+		verify(productDao).listEntities();
+		assertEquals(0, result.size());
+	}
+	
 	private void setupDaosReturnForProducts() {
 		when(mockProductList.iterator()).thenReturn(productIterator);
 		when(productIterator.hasNext()).thenReturn(true).thenReturn(false);
@@ -92,6 +138,7 @@ public class IndexPageLogicTest {
 		
 		when(mockProduct.getId()).thenReturn(productId);
 		when(mockProduct.getProductName()).thenReturn(productName);
+		when(mockProduct.getProductDescription()).thenReturn(productDescription);
 		when(mockProduct.getPrice()).thenReturn(price);
 		when(mockProductImage.getImageLink()).thenReturn(thumbnailLink);
 	}

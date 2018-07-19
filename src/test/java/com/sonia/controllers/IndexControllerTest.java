@@ -25,6 +25,8 @@ public class IndexControllerTest {
 	List<IndexPageBasicProductDisplay> mockProductList;
 	@Mock
 	List<IndexPageBasicProductDisplay> mockProductList2;
+	@Mock
+	List<IndexPageBasicProductDisplay> mockProductList3;
 	@InjectMocks
 	IndexController indexController = new IndexController();
 	
@@ -51,6 +53,17 @@ public class IndexControllerTest {
 		String result = indexController.goToCategory(categoryRequestName, httpServletRequest);
 		verify(indexPageLogic).getIndexPageBasicDisplayObjectsByCategory(categoryRequestName);
 		verify(httpServletRequest).setAttribute("indexProductBasicDisaplays", mockProductList2);
+		assertEquals("index", result);
+	}
+	
+	@Test
+	public void when_findProducts_is_called_then_it_should_get_the_search_keyword_then_call_required_logic_method_and_return_index(){
+		String searchKeyword = "searchKey";
+		when(indexPageLogic.getIndexPageBasicDisplayObjectsBySearchKey(searchKeyword)).thenReturn(mockProductList3);
+	
+		String result = indexController.findProducts(searchKeyword, httpServletRequest);
+		verify(indexPageLogic).getIndexPageBasicDisplayObjectsBySearchKey(searchKeyword);
+		verify(httpServletRequest).setAttribute("indexProductBasicDisaplays", mockProductList3);
 		assertEquals("index", result);
 	}
 }
