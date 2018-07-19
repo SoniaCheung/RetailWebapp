@@ -25,14 +25,16 @@
 	        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
 	      </li>
 	      <li class="nav-item">
-	        <a class="nav-link" href="#">Features</a>
+	        <a class="nav-link" href="#">Clothing</a>
 	      </li>
 	      <li class="nav-item">
-	        <a class="nav-link" href="#">Pricing</a>
+	        <a class="nav-link" href="#">Bags</a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="#">Accessories</a>
 	      </li>
 	      <li class="nav-item">
 	        <a class="nav-link" href="#">About</a>
-	      </li>
 	    </ul>
 	    <form class="form-inline my-2 my-lg-0">
 	      <input class="form-control mr-sm-2" type="text" placeholder="Search">
