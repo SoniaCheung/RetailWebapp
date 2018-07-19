@@ -25,13 +25,13 @@
 	        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
 	      </li>
 	      <li class="nav-item">
-	        <a class="nav-link" href="#">Clothing</a>
+	        <a class="nav-link" href="category?categoryName=clothing">Clothing</a>
 	      </li>
 	      <li class="nav-item">
-	        <a class="nav-link" href="#">Bags</a>
+	        <a class="nav-link" href="category?categoryName=bags">Bags</a>
 	      </li>
 	      <li class="nav-item">
-	        <a class="nav-link" href="#">Accessories</a>
+	        <a class="nav-link" href="category?categoryName=accessories">Accessories</a>
 	      </li>
 	      <li class="nav-item">
 	        <a class="nav-link" href="#">About</a>
@@ -42,6 +42,14 @@
 	    </form>
 	  </div>
 	</nav>
+	
+	<!-- Result not found image -->
+	<c:if test="${empty indexProductBasicDisaplays}">
+		<br><br><br><br><br><br><br>
+		<img src="https://webmarketingschool.com/wp-content/uploads/2018/03/nojobsfound.png"
+		       			style="display: block; margin-left: auto; margin-right: auto;" width="425" height="150" />
+	</c:if>
+	
 	<!-- table for listing all products -->
 	<table style="width:70%;margin-left:15%;margin-right:15%;">
 	  <tbody>

@@ -10,10 +10,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.*;
 
+import com.sonia.daos.CategoryDao;
 import com.sonia.daos.ProductDao;
 import com.sonia.daos.ProductImageDao;
 import com.sonia.displayObjectFactories.IndexPageBasicProductDisplayFactory;
 import com.sonia.displayObjects.IndexPageBasicProductDisplay;
+import com.sonia.entities.Category;
 import com.sonia.entities.Product;
 import com.sonia.entities.ProductImage;
 import com.sonia.pageLogics.IndexPageLogic;
@@ -23,6 +25,8 @@ public class IndexPageLogicTest {
 	@Mock
 	ProductDao productDao;
 	@Mock
+	CategoryDao categoryDao;
+	@Mock
 	ProductImageDao productImageDao;
 	@Mock
 	List<Product> mockProductList;
@@ -30,6 +34,8 @@ public class IndexPageLogicTest {
 	List<ProductImage> mockProductImageList;
 	@Mock
 	Iterator<Product> productIterator;
+	@Mock
+	Category mockCategory;
 	@Mock
 	Product mockProduct;
 	@Mock
@@ -46,6 +52,8 @@ public class IndexPageLogicTest {
 	String thumbnailLink = "mock thumbnail link";
 	String productImage2 = "mock product image two";
 	
+	String categoryName = "clothing";
+	
 	@Before
 	public void setup() {
 		MockitoAnnotations.initMocks(this);
@@ -53,15 +61,26 @@ public class IndexPageLogicTest {
 	
 	@Test
 	public void getAllIndexPageBasixDisplayObjects_should_return_an_array_of_IndexPageBasicProductDisplay() {
-		setupDaosReturn();
-		List<IndexPageBasicProductDisplay> result = indexPageLogic.getAllIndexPageBasixDisplayObjects();
+		setupDaosReturnForProducts();
+		List<IndexPageBasicProductDisplay> result = indexPageLogic.getAllIndexPageBasicDisplayObjects();
 		verify(productDao).listEntities();
 		verify(productImageDao).listProductImagesByProductId(productId);
 		verify(indexPageBasicProductDisplayFactory).createIndexPageBasicProductDisplay(productId, productName, price, thumbnailLink);
 		assertEquals(1, result.size());
 	}
+	
+	@Test
+	public void getIndexPageBasicDisplayObjectsByCategory_should_return_an_array_of_IndexPageBasicProductDisplay() {
+		setupDaosReturnForProducts();
+		setupDaoReturnsForCategoryProducts();
+		
+		List<IndexPageBasicProductDisplay> result = indexPageLogic.getIndexPageBasicDisplayObjectsByCategory(categoryName);
+		verify(categoryDao).getCategoryByName(categoryName);
+		verify(indexPageBasicProductDisplayFactory).createIndexPageBasicProductDisplay(productId, productName, price, thumbnailLink);
+		assertEquals(1, result.size());
+	}
 
-	private void setupDaosReturn() {
+	private void setupDaosReturnForProducts() {
 		when(mockProductList.iterator()).thenReturn(productIterator);
 		when(productIterator.hasNext()).thenReturn(true).thenReturn(false);
 		when(productIterator.next()).thenReturn(mockProduct);
@@ -75,5 +94,11 @@ public class IndexPageLogicTest {
 		when(mockProduct.getProductName()).thenReturn(productName);
 		when(mockProduct.getPrice()).thenReturn(price);
 		when(mockProductImage.getImageLink()).thenReturn(thumbnailLink);
+	}
+	
+	private void setupDaoReturnsForCategoryProducts() {
+		when(categoryDao.getCategoryByName(categoryName)).thenReturn(mockCategory);
+		
+		when(mockCategory.getProductList()).thenReturn(mockProductList);
 	}
 }
