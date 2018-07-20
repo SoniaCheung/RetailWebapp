@@ -7,9 +7,8 @@
 <head>
 <script src="./resources/js/searchForm.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Buy Now!</title>
+<title>Buy Now! - Product Details</title>
 </head>
-
 <body>
 	<!-- navigation bar -->
 	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -45,32 +44,29 @@
 	</nav>
 	
 	<!-- Result not found image -->
-	<c:if test="${empty indexProductBasicDisaplays}">
+	<c:if test="${empty product}">
 		<br><br><br><br><br><br><br>
 		<img src="https://webmarketingschool.com/wp-content/uploads/2018/03/nojobsfound.png"
 		       			style="display: block; margin-left: auto; margin-right: auto;" width="425" height="150" />
 	</c:if>
 	
-	<!-- table for listing all products -->
+	<!-- Showing the product details -->
 	<table style="width:70%;margin-left:15%;margin-right:15%;">
 	  <tbody>
 	  	<tr>
-		     <c:forEach items="${indexProductBasicDisaplays}" var="ipbd" varStatus="loop">
-		       <c:if test="${not loop.first and loop.index % 3 == 0}"> 
-		            		</tr>
-		            <tr>
-		       </c:if>
-		       	<td style="padding: 5px 10px 5px 5px; align=center">
-		       		<img src="${ipbd.thumbnail}" onerror="this.src='http://www.wellesleysocietyofartists.org/wp-content/uploads/2015/11/image-not-found.jpg'"
-		       			width="200" height="200" /> <br>
-					<a href="productDetail?id=${ipbd.productId}">${ipbd.productName}<br>
-					 ${ipbd.price}<br>
-		             ${ipbd.thumbnail}<br>
-		             </a>
-		       	</td>
-		     </c:forEach>
-	     </tr>
+	  		<td>
+	  			<img src="${product.productImageList[0]}" onerror="this.src='http://www.wellesleysocietyofartists.org/wp-content/uploads/2015/11/image-not-found.jpg'"
+		       			width="500" height="500" />
+		    </td>
+		    <td>
+		    		${product.productName} <br>
+		    		${product.productDescription} <br>
+		    		${product.price} <br>
+		    		${product.stock} <br>
+		    </td>
+	  	</tr>
 	  </tbody>
 	</table>
+	
 </body>
 </html>
