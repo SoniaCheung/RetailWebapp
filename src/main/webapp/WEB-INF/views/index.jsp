@@ -23,7 +23,7 @@
 	  <div class="collapse navbar-collapse" id="navbarColor01">
 	    <ul class="navbar-nav mr-auto">
 	      <li class="nav-item active">
-	        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+	        <a class="nav-link" href="/RetailWebapp">Home <span class="sr-only">(current)</span></a>
 	      </li>
 	      <li class="nav-item">
 	        <a class="nav-link" href="category?categoryName=clothing">Clothing</a>
@@ -61,12 +61,11 @@
 		            <tr>
 		       </c:if>
 		       	<td style="padding: 5px 10px 5px 5px; align=center">
+		       		<a href="productDetail?id=${ipbd.productId}">
 		       		<img src="${ipbd.thumbnail}" onerror="this.src='http://www.wellesleysocietyofartists.org/wp-content/uploads/2015/11/image-not-found.jpg'"
 		       			width="200" height="200" /> <br>
-					<a href="productDetail?id=${ipbd.productId}">${ipbd.productName}<br>
-					 ${ipbd.price}<br>
-		             ${ipbd.thumbnail}<br>
-		             </a>
+					${ipbd.productName}<br></a>
+					 HKD ${ipbd.price}<br>
 		       	</td>
 		     </c:forEach>
 	     </tr>
