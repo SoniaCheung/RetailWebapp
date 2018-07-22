@@ -4,8 +4,12 @@
 <!DOCTYPE html>
 <html>
 <link href="./resources/css/bootstrap.css" rel="stylesheet">
+<link href="./resources/css/plus-minus-input.css" rel="stylesheet">
 <head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="./resources/js/searchForm.js"></script>
+<script src="./resources/js/plus-minus-input.js"></script>
+
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Buy Now! - Product Details</title>
 </head>
@@ -22,7 +26,7 @@
 	  <div class="collapse navbar-collapse" id="navbarColor01">
 	    <ul class="navbar-nav mr-auto">
 	      <li class="nav-item active">
-	        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+	        <a class="nav-link" href="/RetailWebapp">Home <span class="sr-only">(current)</span></a>
 	      </li>
 	      <li class="nav-item">
 	        <a class="nav-link" href="category?categoryName=clothing">Clothing</a>
@@ -49,24 +53,48 @@
 		<img src="https://webmarketingschool.com/wp-content/uploads/2018/03/nojobsfound.png"
 		       			style="display: block; margin-left: auto; margin-right: auto;" width="425" height="150" />
 	</c:if>
-	
+
+
 	<!-- Showing the product details -->
-	<table style="width:70%;margin-left:15%;margin-right:15%;">
-	  <tbody>
-	  	<tr>
-	  		<td>
-	  			<img src="${product.productImageList[0]}" onerror="this.src='http://www.wellesleysocietyofartists.org/wp-content/uploads/2015/11/image-not-found.jpg'"
-		       			width="500" height="500" />
-		    </td>
-		    <td>
-		    		${product.productName} <br>
-		    		${product.productDescription} <br>
-		    		${product.price} <br>
-		    		${product.stock} <br>
-		    </td>
-	  	</tr>
-	  </tbody>
-	</table>
+	<c:if test="${not empty product}">
+		<table style="width:70%;margin-left:15%;margin-right:15%;">
+		  <tbody>
+		  	<tr>
+		  		<td>
+		  			<img src="${product.productImageList[0]}" onerror="this.src='http://www.wellesleysocietyofartists.org/wp-content/uploads/2015/11/image-not-found.jpg'"
+			       			width="500" height="500" />
+			    </td>
+			    <td>
+			    		<h5>${product.productName} </h5>
+			    		<i style="color: #777;">${product.productDescription}</i> <br>
+			    		<h6>HKD ${product.price} </h6>
+			    		<c:if test="${product.stock <= 50}">
+						<p class="text-danger">Low In Stock </p>
+					</c:if>
+					<c:if test="${product.stock > 50}">
+						<p class="text-success">In Stock </p>
+					</c:if>
+					<div class="input-group plus-minus-input">
+					  <div class="input-group-button">
+					    <button type="button" class="button hollow circle" data-quantity="minus" data-field="quantity">
+					      -
+					    </button>
+					  </div>
+					  <input class="input-group-field" type="number" name="quantity" value="0">
+					  
+					  <div class="input-group-button">
+					    <button type="button" class="button hollow circle" data-quantity="plus" data-field="quantity">
+					      +
+					    </button>
+					  </div>
+					</div>
+					<br>
+			    		<button type="button" class="btn btn-primary" style="width:260px;">ADD TO SHOPPING CART</button>
+			    </td>
+		  	</tr>
+		  </tbody>
+		</table>
+	</c:if>
 	
 </body>
 </html>
