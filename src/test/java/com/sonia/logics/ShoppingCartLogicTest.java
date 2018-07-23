@@ -1,10 +1,7 @@
 package com.sonia.logics;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-import java.util.AbstractMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
