@@ -44,6 +44,9 @@
 	      <input name="searchKeyword" class="form-control mr-sm-2" type="text" placeholder="Search for name or description">
 	      <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
 	    </form>
+	    	<!-- Shopping cart -->
+	    <a href="shoppingCart"><img src="https://cdn4.iconfinder.com/data/icons/shopping-21/64/shopping-06-512.png"
+		       			width="60" height="60" hspace="20"/></a>
 	  </div>
 	</nav>
 	
@@ -74,22 +77,25 @@
 					<c:if test="${product.stock > 50}">
 						<p class="text-success">In Stock </p>
 					</c:if>
-					<div class="input-group plus-minus-input">
-					  <div class="input-group-button">
-					    <button type="button" class="button hollow circle" data-quantity="minus" data-field="quantity">
-					      -
-					    </button>
-					  </div>
-					  <input class="input-group-field" type="number" name="quantity" value="0">
-					  
-					  <div class="input-group-button">
-					    <button type="button" class="button hollow circle" data-quantity="plus" data-field="quantity">
-					      +
-					    </button>
-					  </div>
-					</div>
-					<br>
-			    		<button type="button" class="btn btn-primary" style="width:260px;">ADD TO SHOPPING CART</button>
+					<form action="addShoppingCart" method="post">
+						<div class="input-group plus-minus-input">
+						  <div class="input-group-button">
+						    <button type="button" class="button hollow circle" data-quantity="minus" data-field="quantity">
+						      -
+						    </button>
+						  </div>
+						  <input class="input-group-field" type="number" name="quantity" value="1">
+						  
+						  <div class="input-group-button">
+						    <button type="button" class="button hollow circle" data-quantity="plus" data-field="quantity">
+						      +
+						    </button>
+						  </div>
+						</div>
+						<br>
+						<input type="hidden" value="${product.id}" name="productId" />
+				    		<button type="submit" class="btn btn-primary" style="width:260px;">ADD TO SHOPPING CART</button>
+			   		</form>
 			    </td>
 		  	</tr>
 		  </tbody>

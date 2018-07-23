@@ -5,10 +5,48 @@
 <html>
 <link href="./resources/css/bootstrap.css" rel="stylesheet">
 <head>
+<script src="./resources/js/searchForm.js"></script>
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Buy Now! - Shopping Cart</title>
 </head>
 <body>
+	<!-- navigation bar -->
+	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+	  <!-- Logo image (Buy Now) -->
+		<img src="http://keyursavaliya.com/wp-content/uploads/2017/08/buynow-logo-web-hostingpng.png"
+		       			width="175" height="75" hspace="20"/>
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+	    <span class="navbar-toggler-icon"></span>
+	  </button>
+	
+	  <div class="collapse navbar-collapse" id="navbarColor01">
+	    <ul class="navbar-nav mr-auto">
+	      <li class="nav-item active">
+	        <a class="nav-link" href="/RetailWebapp">Home <span class="sr-only">(current)</span></a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="category?categoryName=clothing">Clothing</a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="category?categoryName=bags">Bags</a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="category?categoryName=accessories">Accessories</a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="#">About</a>
+	    </ul>
+	    <form id="searchForm" class="form-inline my-2 my-lg-0" onsubmit="submitSearch()">
+	      <input name="searchKeyword" class="form-control mr-sm-2" type="text" placeholder="Search for name or description">
+	      <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+	    </form>
+	    <!-- Shopping cart -->
+	    <a href="shoppingCart"><img src="https://cdn4.iconfinder.com/data/icons/shopping-21/64/shopping-06-512.png"
+		       			width="60" height="60" hspace="20"/></a>
+	  </div>
+	</nav>
+
 	<!-- Shopping Cart is empty -->
 	<c:if test="${empty sessionScope.shoppingCart}">
 		<br><br><br><br><br><br><br>
@@ -19,14 +57,24 @@
 	</c:if>
 	
 	<c:if test="${not empty sessionScope.shoppingCart}">
-		<table style="width:70%;margin-left:15%;margin-right:15%;">
+		<br>
+		<h3 style="margin-left:45px; color: #EB6864;">Shopping Cart</h3>
+		<br>
+		<table style="width:70%;margin-left:15%;margin-right:15%;text-align:center">
 		  <tbody>
+		  	<tr>
+		      <th scope="col">Product</th>
+		      <th scope="col">Product Name</th>
+		      <th scope="col">Quantity</th>
+		      <th scope="col">Price</th>
+		    </tr>
 	  		<c:forEach items="${sessionScope.shoppingCart.productMap}" var="productMapItem">
 		  		<tr>
-			  		<td>
-			  		${ productMapItem.key.productName } <br>
-			  		${ productMapItem.value }
-			  		</td>
+		  			<td><img src="${productMapItem.key.productImageList[0]}" onerror="this.src='http://www.wellesleysocietyofartists.org/wp-content/uploads/2015/11/image-not-found.jpg'"
+		       			width="150" height="150" /> <br></td>
+			  		<td> ${ productMapItem.key.productName } </td>
+			  		<td>${ productMapItem.value }</td>
+			  		<td>HKD ${ productMapItem.key.price * productMapItem.value}</td>
 			  	</tr>
 	  		</c:forEach>
 		  </tbody>
