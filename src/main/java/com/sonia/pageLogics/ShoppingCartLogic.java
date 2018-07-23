@@ -23,10 +23,7 @@ public class ShoppingCartLogic {
 	public void addToShoppingCart(int productId, int quantity, HttpServletRequest request, HttpSession session) {
 		Product product = productDao.getEntity(productId);
 		if(session.getAttribute("shoppingCart") == null) {
-			ShoppingCart newShoppingCart = shoppingCartFactory.createShoppingCart();
-			newShoppingCart.setProductMap(new HashMap<Product, Integer>());
-			newShoppingCart.getProductMap().put(product, quantity);
-			newShoppingCart.updateTotalAmount();
+			ShoppingCart newShoppingCart = createAndSetupNewShoppingCart(product, quantity);
 			session.setAttribute("shoppingCart", newShoppingCart);
 		} else {	
 			ShoppingCart currentShoppingCart = (ShoppingCart) session.getAttribute("shoppingCart");
@@ -42,6 +39,14 @@ public class ShoppingCartLogic {
 			}
 			currentShoppingCart.updateTotalAmount();
 		}
+	}
+	
+	private ShoppingCart createAndSetupNewShoppingCart(Product product, Integer quantity) {
+		ShoppingCart newShoppingCart = shoppingCartFactory.createShoppingCart();
+		newShoppingCart.setProductMap(new HashMap<Product, Integer>());
+		newShoppingCart.getProductMap().put(product, quantity);
+		newShoppingCart.updateTotalAmount();
+		return newShoppingCart;
 	}
 	
 	private boolean checkMapContainsProduct(Map<Product, Integer> productMap, Product targetProduct) {
