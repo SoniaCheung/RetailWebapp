@@ -1,6 +1,8 @@
 package com.sonia.pageLogics;
 
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -24,11 +26,31 @@ public class ShoppingCartLogic {
 			ShoppingCart newShoppingCart = shoppingCartFactory.createShoppingCart();
 			newShoppingCart.setProductMap(new HashMap<Product, Integer>());
 			newShoppingCart.getProductMap().put(product, quantity);
+			newShoppingCart.updateTotalAmount();
 			session.setAttribute("shoppingCart", newShoppingCart);
 		} else {	
 			ShoppingCart currentShoppingCart = (ShoppingCart) session.getAttribute("shoppingCart");
-			currentShoppingCart.getProductMap().put(product, quantity);
+			if(!checkMapContainsProduct(currentShoppingCart.getProductMap(), product)) {
+				currentShoppingCart.getProductMap().put(product, quantity);
+			} else {
+				for(Entry<Product, Integer> entry : currentShoppingCart.getProductMap().entrySet()) {
+					if (entry.getKey().getId() == product.getId()) {
+						entry.setValue(entry.getValue() + quantity);
+						break;
+					}
+				}
+			}
+			currentShoppingCart.updateTotalAmount();
 		}
+	}
+	
+	private boolean checkMapContainsProduct(Map<Product, Integer> productMap, Product targetProduct) {
+		for(Product mapProduct : productMap.keySet()) {
+			if (mapProduct.getId() == targetProduct.getId()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

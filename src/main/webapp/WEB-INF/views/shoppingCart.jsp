@@ -77,6 +77,18 @@
 			  		<td>HKD ${ productMapItem.key.price * productMapItem.value}</td>
 			  	</tr>
 	  		</c:forEach>
+	  		<tr>
+	  			<td></td>
+	  			<td></td>
+	  			<td></td>
+	  			<td><b>Total Amount:</b></td>
+	  		<tr>
+	  		<tr>
+	  			<td></td>
+	  			<td></td>
+	  			<td></td>
+	  			<td>HKD ${sessionScope.shoppingCart.totalAmount }</td>
+	  		<tr>
 		  </tbody>
 		</table>
 	</c:if>

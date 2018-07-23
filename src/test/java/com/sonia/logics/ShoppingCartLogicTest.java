@@ -3,7 +3,11 @@ package com.sonia.logics;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
+import java.util.AbstractMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -36,6 +40,18 @@ public class ShoppingCartLogicTest {
 	Product mockProduct;
 	@Mock
 	Map<Product, Integer> mockProductMap;
+	@Mock
+	Set<Product> mockProductKeys;
+	@Mock
+	Iterator<Product> mockProductKeyItertor;
+	
+	@Mock
+	Set<Map.Entry<Product, Integer>> mockProductEntrySet;
+	@Mock
+	Map.Entry<Product, Integer> mockEntry;
+	@Mock
+	Iterator<Map.Entry<Product, Integer>> mockEntrySetIterator;
+	
 	@InjectMocks
 	ShoppingCartLogic shoppingCartLogic = new ShoppingCartLogic();
 	
@@ -58,19 +74,49 @@ public class ShoppingCartLogicTest {
 		verify(shoppingCartFactory).createShoppingCart();
 		verify(mockShoppingCart).setProductMap(any());
 		verify(mockProductMap).put(mockProduct, quantity);
+		verify(mockShoppingCart).updateTotalAmount();
 		verify(session).setAttribute("shoppingCart", mockShoppingCart);
 	}
 	
 	@Test
-	public void addToShoppingCart_should_add_an_item_to_shoppingCart_productMap() {
+	public void addToShoppingCart_should_add_an_item_to_shoppingCart_productMap_if_product_is_not_exists_in_map() {
 		when(session.getAttribute("shoppingCart")).thenReturn(mockShoppingCart);
-		when(mockShoppingCart.getProductMap()).thenReturn(mockProductMap);
 		when(productDao.getEntity(productId)).thenReturn(mockProduct);
+		
+		when(mockShoppingCart.getProductMap()).thenReturn(mockProductMap);
+		when(mockProductMap.keySet()).thenReturn(mockProductKeys);
+		when(mockProductKeys.iterator()).thenReturn(mockProductKeyItertor);
+		when(mockProductKeyItertor.hasNext()).thenReturn(false);
 		
 		shoppingCartLogic.addToShoppingCart(productId, quantity, request, session);
 		
-		verify(mockShoppingCart).getProductMap();
 		verify(mockProductMap).put(mockProduct, quantity);
+		verify(mockShoppingCart).updateTotalAmount();
 	}
 
+	@Test
+	public void addToShoppingCart_should_update_item_quantity_if_product_exists_in_map() {
+		when(session.getAttribute("shoppingCart")).thenReturn(mockShoppingCart);
+		when(productDao.getEntity(productId)).thenReturn(mockProduct);
+		
+		when(mockShoppingCart.getProductMap()).thenReturn(mockProductMap);
+		when(mockProductMap.keySet()).thenReturn(mockProductKeys);
+		when(mockProductKeys.iterator()).thenReturn(mockProductKeyItertor);
+		when(mockProductKeyItertor.hasNext()).thenReturn(true).thenReturn(false);
+		when(mockProductKeyItertor.next()).thenReturn(mockProduct);
+		
+		when(mockProduct.getId()).thenReturn(productId);
+		
+		when(mockProductMap.entrySet()).thenReturn(mockProductEntrySet);
+		when(mockProductEntrySet.iterator()).thenReturn(mockEntrySetIterator);
+		when(mockEntrySetIterator.hasNext()).thenReturn(true).thenReturn(false);
+		when(mockEntrySetIterator.next()).thenReturn(mockEntry);
+		when(mockEntry.getKey()).thenReturn(mockProduct);
+		when(mockEntry.getValue()).thenReturn(2);
+		
+		shoppingCartLogic.addToShoppingCart(productId, quantity, request, session);
+		
+		verify(mockEntry).setValue(5);
+		verify(mockShoppingCart).updateTotalAmount();
+	}
 }
