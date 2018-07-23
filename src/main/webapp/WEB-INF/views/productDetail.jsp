@@ -4,12 +4,15 @@
 <!DOCTYPE html>
 <html>
 <link href="./resources/css/bootstrap.css" rel="stylesheet">
+<link href="./resources/css/plus-minus-input.css" rel="stylesheet">
 <head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="./resources/js/searchForm.js"></script>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Buy Now!</title>
-</head>
+<script src="./resources/js/plus-minus-input.js"></script>
 
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Buy Now! - Product Details</title>
+</head>
 <body>
 	<!-- navigation bar -->
 	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -41,38 +44,57 @@
 	      <input name="searchKeyword" class="form-control mr-sm-2" type="text" placeholder="Search for name or description">
 	      <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
 	    </form>
-	    <!-- Shopping cart -->
-	    <a href="shoppingCart"><img src="https://cdn4.iconfinder.com/data/icons/shopping-21/64/shopping-06-512.png"
-		       			width="60" height="60" hspace="20"/></a>
 	  </div>
 	</nav>
 	
 	<!-- Result not found image -->
-	<c:if test="${empty indexProductBasicDisaplays}">
+	<c:if test="${empty product}">
 		<br><br><br><br><br><br><br>
 		<img src="https://webmarketingschool.com/wp-content/uploads/2018/03/nojobsfound.png"
 		       			style="display: block; margin-left: auto; margin-right: auto;" width="425" height="150" />
 	</c:if>
+
+
+	<!-- Showing the product details -->
+	<c:if test="${not empty product}">
+		<table style="width:70%;margin-left:15%;margin-right:15%;">
+		  <tbody>
+		  	<tr>
+		  		<td>
+		  			<img src="${product.productImageList[0]}" onerror="this.src='http://www.wellesleysocietyofartists.org/wp-content/uploads/2015/11/image-not-found.jpg'"
+			       			width="500" height="500" />
+			    </td>
+			    <td>
+			    		<h5>${product.productName} </h5>
+			    		<i style="color: #777;">${product.productDescription}</i> <br>
+			    		<h6>HKD ${product.price} </h6>
+			    		<c:if test="${product.stock <= 50}">
+						<p class="text-danger">Low In Stock </p>
+					</c:if>
+					<c:if test="${product.stock > 50}">
+						<p class="text-success">In Stock </p>
+					</c:if>
+					<div class="input-group plus-minus-input">
+					  <div class="input-group-button">
+					    <button type="button" class="button hollow circle" data-quantity="minus" data-field="quantity">
+					      -
+					    </button>
+					  </div>
+					  <input class="input-group-field" type="number" name="quantity" value="0">
+					  
+					  <div class="input-group-button">
+					    <button type="button" class="button hollow circle" data-quantity="plus" data-field="quantity">
+					      +
+					    </button>
+					  </div>
+					</div>
+					<br>
+			    		<button type="button" class="btn btn-primary" style="width:260px;">ADD TO SHOPPING CART</button>
+			    </td>
+		  	</tr>
+		  </tbody>
+		</table>
+	</c:if>
 	
-	<!-- table for listing all products -->
-	<table style="width:70%;margin-left:15%;margin-right:15%;">
-	  <tbody>
-	  	<tr>
-		     <c:forEach items="${indexProductBasicDisaplays}" var="ipbd" varStatus="loop">
-		       <c:if test="${not loop.first and loop.index % 3 == 0}"> 
-		            		</tr>
-		            <tr>
-		       </c:if>
-		       	<td style="padding: 5px 10px 5px 5px; align=center">
-		       		<a href="productDetail?id=${ipbd.productId}">
-		       		<img src="${ipbd.thumbnail}" onerror="this.src='http://www.wellesleysocietyofartists.org/wp-content/uploads/2015/11/image-not-found.jpg'"
-		       			width="200" height="200" /> <br>
-					${ipbd.productName}<br></a>
-					 HKD ${ipbd.price}<br>
-		       	</td>
-		     </c:forEach>
-	     </tr>
-	  </tbody>
-	</table>
 </body>
 </html>
