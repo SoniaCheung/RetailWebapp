@@ -22,6 +22,8 @@ public class User implements GenericEntity{
 	private String username;
 	@Column(name="password")
 	private String password;
+	@Column(name="email")
+	private String email;
 	@Column(name="address")
 	private String address;
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
@@ -30,14 +32,17 @@ public class User implements GenericEntity{
 	public User() {
 		super();
 	}
-	
-	public User(String username, String password, String address, List<Order> orderList) {
+
+	public User(String username, String password, String email, String address, List<Order> orderList) {
 		super();
 		this.username = username;
 		this.password = password;
+		this.email = email;
 		this.address = address;
 		this.orderList = orderList;
 	}
+
+
 	public int getId() {
 		return id;
 	}
@@ -55,6 +60,12 @@ public class User implements GenericEntity{
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	public String getAddress() {
 		return address;

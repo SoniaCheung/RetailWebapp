@@ -6,10 +6,10 @@
 <link href="./resources/css/bootstrap.css" rel="stylesheet">
 <head>
 <script src="./resources/js/searchForm.js"></script>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Buy Now!</title>
-</head>
 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Buy Now! - User Center</title>
+</head>
 <body>
 	<!-- navigation bar -->
 	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -44,38 +44,7 @@
 	    <!-- Shopping cart -->
 	    <a href="shoppingCart"><img src="https://cdn4.iconfinder.com/data/icons/shopping-21/64/shopping-06-512.png"
 		       			width="60" height="60" hspace="20"/></a>
-		<!-- Registration -->
-		<a href="register"><img src="https://cdn0.iconfinder.com/data/icons/academics-linear-black/2048/Register-512.png"
-		       			width="60" height="60" hspace="20"/></a>
 	  </div>
 	</nav>
-	
-	<!-- Result not found image -->
-	<c:if test="${empty indexProductBasicDisaplays}">
-		<br><br><br><br><br><br><br>
-		<img src="https://webmarketingschool.com/wp-content/uploads/2018/03/nojobsfound.png"
-		       			style="display: block; margin-left: auto; margin-right: auto;" width="425" height="150" />
-	</c:if>
-	
-	<!-- table for listing all products -->
-	<table style="width:70%;margin-left:15%;margin-right:15%;">
-	  <tbody>
-	  	<tr>
-		     <c:forEach items="${indexProductBasicDisaplays}" var="ipbd" varStatus="loop">
-		       <c:if test="${not loop.first and loop.index % 3 == 0}"> 
-		            		</tr>
-		            <tr>
-		       </c:if>
-		       	<td style="padding: 5px 10px 5px 5px; align=center">
-		       		<a href="productDetail?id=${ipbd.productId}">
-		       		<img src="${ipbd.thumbnail}" onerror="this.src='http://www.wellesleysocietyofartists.org/wp-content/uploads/2015/11/image-not-found.jpg'"
-		       			width="200" height="200" /> <br>
-					${ipbd.productName}<br></a>
-					 HKD ${ipbd.price}<br>
-		       	</td>
-		     </c:forEach>
-	     </tr>
-	  </tbody>
-	</table>
 </body>
 </html>

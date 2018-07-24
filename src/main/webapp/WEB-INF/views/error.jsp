@@ -50,32 +50,12 @@
 	  </div>
 	</nav>
 	
-	<!-- Result not found image -->
-	<c:if test="${empty indexProductBasicDisaplays}">
-		<br><br><br><br><br><br><br>
-		<img src="https://webmarketingschool.com/wp-content/uploads/2018/03/nojobsfound.png"
-		       			style="display: block; margin-left: auto; margin-right: auto;" width="425" height="150" />
-	</c:if>
+	<!-- Error image -->
+	<br><br><br><br><br><br><br>
+		<h4 align=center>Oops! </h4>
+	<br>
+	<img src="https://www.flynn-golf.com/Images/oops.jpg"
+		       			style="display: block; margin-left: auto; margin-right: auto;" width="475" height="250" />
 	
-	<!-- table for listing all products -->
-	<table style="width:70%;margin-left:15%;margin-right:15%;">
-	  <tbody>
-	  	<tr>
-		     <c:forEach items="${indexProductBasicDisaplays}" var="ipbd" varStatus="loop">
-		       <c:if test="${not loop.first and loop.index % 3 == 0}"> 
-		            		</tr>
-		            <tr>
-		       </c:if>
-		       	<td style="padding: 5px 10px 5px 5px; align=center">
-		       		<a href="productDetail?id=${ipbd.productId}">
-		       		<img src="${ipbd.thumbnail}" onerror="this.src='http://www.wellesleysocietyofartists.org/wp-content/uploads/2015/11/image-not-found.jpg'"
-		       			width="200" height="200" /> <br>
-					${ipbd.productName}<br></a>
-					 HKD ${ipbd.price}<br>
-		       	</td>
-		     </c:forEach>
-	     </tr>
-	  </tbody>
-	</table>
 </body>
 </html>
