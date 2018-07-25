@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -18,6 +19,8 @@ public class ProductDetailControllerTest {
 
 	@Mock
 	HttpServletRequest httpServletRequest;
+	@Mock
+	HttpSession httpSession;
 	@Mock
 	ProductDao productDao;
 	@Mock
@@ -36,7 +39,7 @@ public class ProductDetailControllerTest {
 	public void goToProductDetail_should_call_product_dao_to_get_product_and_return_productDetailPage() {
 		when(productDao.getEntity(productId)).thenReturn(mockProduct);
 		
-		String result = productDetailController.goToProductDetail(productId, httpServletRequest);
+		String result = productDetailController.goToProductDetail(productId, httpServletRequest, httpSession);
 		
 		verify(productDao).getEntity(productId);
 		verify(httpServletRequest).setAttribute("product", mockProduct);

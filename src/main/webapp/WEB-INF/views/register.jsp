@@ -6,6 +6,8 @@
 <html>
 <link href="./resources/css/bootstrap.css" rel="stylesheet">
 <head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script src="./resources/js/searchForm.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Buy Now! - Registration</title>
@@ -42,12 +44,20 @@
 	      <input name="searchKeyword" class="form-control mr-sm-2" type="text" placeholder="Search for name or description">
 	      <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
 	    </form>
-	    <!-- Shopping cart -->
-	    <a href="shoppingCart"><img src="https://cdn4.iconfinder.com/data/icons/shopping-21/64/shopping-06-512.png"
-		       			width="60" height="60" hspace="20"/></a>
+	     <!-- Shopping cart -->
+		<a href="shoppingCart"><img src="https://cdn4.iconfinder.com/data/icons/shopping-21/64/shopping-06-512.png"
+			       			width="60" height="60" hspace="10"/></a>
+		<!-- User Login -->
+		<a href="userLogin">
+			<img src="http://cdn.onlinewebfonts.com/svg/img_518099.png"
+		       			width="50" height="50" hspace="10"/></a>
 		<!-- Registration -->
-		<a href="register"><img src="https://cdn0.iconfinder.com/data/icons/academics-linear-black/2048/Register-512.png"
-		       			width="60" height="60" hspace="20"/></a>
+		<c:if test="${ empty sessionScope.user }">
+	  		<div>
+			<a href="register"><img src="https://cdn0.iconfinder.com/data/icons/academics-linear-black/2048/Register-512.png"
+			       			width="60" height="60" hspace="10"/></a>
+		  	</div>
+	  	</c:if>
 	  </div>
 	</nav>
 	

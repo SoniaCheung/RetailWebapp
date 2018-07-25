@@ -2,6 +2,7 @@ package com.sonia.controllers;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +17,7 @@ public class ProductDetailController {
 	ProductDao productDao;
 
 	@RequestMapping(value="/productDetail")
-	public String goToProductDetail(@RequestParam("id") int productId, HttpServletRequest request){
+	public String goToProductDetail(@RequestParam("id") int productId, HttpServletRequest request, HttpSession session){
 		Product product = productDao.getEntity(productId);
 		request.setAttribute("product", product);
 		return "productDetail";

@@ -7,6 +7,7 @@ import static org.mockito.Mockito.*;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.junit.*;
 import org.mockito.InjectMocks;
@@ -19,6 +20,8 @@ import com.sonia.pageLogics.IndexPageLogic;
 public class IndexControllerTest {
 	@Mock
 	HttpServletRequest httpServletRequest;
+	@Mock
+	HttpSession httpSession;
 	@Mock
 	IndexPageLogic indexPageLogic;
 	@Mock
@@ -39,7 +42,7 @@ public class IndexControllerTest {
 	public void when_go_to_index_is_called_then_it_should_call_required_logic_methods_and_return_index() {
 		when(indexPageLogic.getAllIndexPageBasicDisplayObjects()).thenReturn(mockProductList);
 		
-		String result = indexController.goToIndex(httpServletRequest);
+		String result = indexController.goToIndex(httpServletRequest, httpSession);
 		verify(indexPageLogic).getAllIndexPageBasicDisplayObjects();
 		verify(httpServletRequest).setAttribute("indexProductBasicDisaplays", mockProductList);
 		assertTrue(result.equals("index"));
@@ -50,7 +53,7 @@ public class IndexControllerTest {
 		String categoryRequestName = "clothing";
 		when(indexPageLogic.getIndexPageBasicDisplayObjectsByCategory(categoryRequestName)).thenReturn(mockProductList2);
 		
-		String result = indexController.goToCategory(categoryRequestName, httpServletRequest);
+		String result = indexController.goToCategory(categoryRequestName, httpServletRequest, httpSession);
 		verify(indexPageLogic).getIndexPageBasicDisplayObjectsByCategory(categoryRequestName);
 		verify(httpServletRequest).setAttribute("indexProductBasicDisaplays", mockProductList2);
 		assertEquals("index", result);
@@ -61,7 +64,7 @@ public class IndexControllerTest {
 		String searchKeyword = "searchKey";
 		when(indexPageLogic.getIndexPageBasicDisplayObjectsBySearchKey(searchKeyword)).thenReturn(mockProductList3);
 	
-		String result = indexController.findProducts(searchKeyword, httpServletRequest);
+		String result = indexController.findProducts(searchKeyword, httpServletRequest, httpSession);
 		verify(indexPageLogic).getIndexPageBasicDisplayObjectsBySearchKey(searchKeyword);
 		verify(httpServletRequest).setAttribute("indexProductBasicDisaplays", mockProductList3);
 		assertEquals("index", result);

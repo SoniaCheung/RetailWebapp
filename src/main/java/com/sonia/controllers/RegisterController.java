@@ -29,7 +29,6 @@ public class RegisterController {
 
 	@RequestMapping(value="/registerUser", method = RequestMethod.POST)
 	public String registerUser(User user, BindingResult result, ModelMap model, HttpSession session) {		
-		System.out.println("Correct call!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		User newUser = null;
 		newUser = 	userDao.addOrUpdateEntity(user);
 		if(newUser != null) {
