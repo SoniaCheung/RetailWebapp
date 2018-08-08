@@ -11,6 +11,22 @@
 <script src="./resources/js/searchForm.js"></script>
 <script src="./resources/js/plus-minus-input.js"></script>
 
+<script>
+	function checkStock(){
+		var stock = ${product.stock};
+		var requiredQuantity = document.forms["addToShoppingCartForm"]["quantity"].value;
+		
+		if(stock >= requiredQuantity){
+			window.alert("Added to shopping cart.");
+			document.addToShoppingCartForm.submit();
+			return true;
+		} else {
+			window.alert("Sorry, we don't have enough stock");
+			return false;
+		}
+	}
+</script>
+
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Buy Now! - Product Details</title>
 </head>
@@ -89,24 +105,38 @@
 					<c:if test="${product.stock > 50}">
 						<p class="text-success">In Stock </p>
 					</c:if>
-					<form action="addShoppingCart" method="post">
-						<div class="input-group plus-minus-input">
-						  <div class="input-group-button">
-						    <button type="button" class="button hollow circle" data-quantity="minus" data-field="quantity">
-						      -
-						    </button>
-						  </div>
-						  <input class="input-group-field" type="number" name="quantity" value="1">
-						  
-						  <div class="input-group-button">
-						    <button type="button" class="button hollow circle" data-quantity="plus" data-field="quantity">
-						      +
-						    </button>
-						  </div>
-						</div>
-						<br>
-						<input type="hidden" value="${product.id}" name="productId" />
-				    		<button type="submit" class="btn btn-primary" style="width:260px;">ADD TO SHOPPING CART</button>
+					
+					<c:if test="${product.stock <= 0}">
+						<p class="text-primary">Out of stock </p>
+					</c:if>
+
+					<form name="addToShoppingCartForm" action="addShoppingCart" method="post">
+						<!-- stock > 0 -->
+						<c:if test="${product.stock > 0}">
+							<div class="input-group plus-minus-input">
+							  <div class="input-group-button">
+							    <button type="button" class="button hollow circle" data-quantity="minus" data-field="quantity">
+							      -
+							    </button>
+							  </div>
+							  <input class="input-group-field" type="number" name="quantity" value="1">
+							  
+							  <div class="input-group-button">
+							    <button type="button" class="button hollow circle" data-quantity="plus" data-field="quantity">
+							      +
+							    </button>
+							  </div>
+							</div>
+							<br>
+							<input type="hidden" value="${product.id}" name="productId" />
+					    		<button type="button" class="btn btn-primary" style="width:260px;" onClick="checkStock()">ADD TO SHOPPING CART</button>
+				    		</c:if>
+				    		
+				    		<!-- stock > 0 -->
+				    		<c:if test="${product.stock <= 0}">
+				    			<br>
+				    			<button type="button" class="btn btn-primary" style="width:260px;" disabled="disabled">ADD TO SHOPPING CART</button>
+				    		</c:if>
 			   		</form>
 			    </td>
 		  	</tr>
