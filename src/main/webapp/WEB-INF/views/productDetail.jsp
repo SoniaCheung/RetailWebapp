@@ -10,6 +10,22 @@
 <script src="./resources/js/searchForm.js"></script>
 <script src="./resources/js/plus-minus-input.js"></script>
 
+<script>
+	function checkStock(){
+		var stock = ${product.stock};
+		var requiredQuantity = document.forms["addToShoppingCartForm"]["quantity"].value;
+		
+		if(stock >= requiredQuantity){
+			window.alert("Added to shopping cart.");
+			document.addToShoppingCartForm.submit();
+			return true;
+		} else {
+			window.alert("Sorry, we don't have enough stock");
+			return false;
+		}
+	}
+</script>
+
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Buy Now! - Product Details</title>
 </head>
@@ -82,7 +98,7 @@
 						<p class="text-primary">Out of stock </p>
 					</c:if>
 
-					<form action="addShoppingCart" method="post">
+					<form name="addToShoppingCartForm" action="addShoppingCart" method="post">
 						<!-- stock > 0 -->
 						<c:if test="${product.stock > 0}">
 							<div class="input-group plus-minus-input">
@@ -101,7 +117,7 @@
 							</div>
 							<br>
 							<input type="hidden" value="${product.id}" name="productId" />
-					    		<button type="submit" class="btn btn-primary" style="width:260px;">ADD TO SHOPPING CART</button>
+					    		<button type="button" class="btn btn-primary" style="width:260px;" onClick="checkStock()">ADD TO SHOPPING CART</button>
 				    		</c:if>
 				    		
 				    		<!-- stock > 0 -->
