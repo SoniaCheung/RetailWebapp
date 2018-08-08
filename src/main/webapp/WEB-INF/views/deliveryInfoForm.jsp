@@ -8,25 +8,10 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script src="./resources/js/searchForm.js"></script>
-
-<script type="text/javascript">
-	function checkLogin(){
-		var logined = '<%= session.getAttribute("user") %>';
-		console.log(logined);
-		if (logined == 'null'){
-			window.alert("Please login first.");
-			return false;
-		} else {
-			window.alert("Logined");
-			document.placeOrder.submit();
-			return true;
-		}
-	}
-</script>
-
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Buy Now! - Shopping Cart</title>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Buy Now!</title>
 </head>
+
 <body>
 	<!-- navigation bar -->
 	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -58,7 +43,7 @@
 	      <input name="searchKeyword" class="form-control mr-sm-2" type="text" placeholder="Search for name or description">
 	      <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
 	    </form>
-	     <!-- Shopping cart -->
+	    <!-- Shopping cart -->
 		<a href="shoppingCart"><img src="https://cdn4.iconfinder.com/data/icons/shopping-21/64/shopping-06-512.png"
 			       			width="60" height="60" hspace="10"/></a>
 		<!-- User Login -->
@@ -72,59 +57,8 @@
 			       			width="60" height="60" hspace="10"/></a>
 		  	</div>
 	  	</c:if>
-	  </div>
 	</nav>
-
-	<!-- Shopping Cart is empty -->
-	<c:if test="${empty sessionScope.shoppingCart}">
-		<br><br><br><br><br><br><br>
-		<h4 align=center>Oops! Your Shopping Cart is empty!</h4>
-		<br>
-		<img src="http://www.megabakeenergybar.com.au/wp-content/themes/mrtailor/images/empty_cart.png"
-		       			style="display: block; margin-left: auto; margin-right: auto;" width="475" height="250" />
-	</c:if>
 	
-	<c:if test="${not empty sessionScope.shoppingCart}">
-		<br>
-		<h3 style="margin-left:45px; color: #EB6864;">Shopping Cart</h3>
-		<br>
-		<table style="width:70%;margin-left:15%;margin-right:15%;text-align:center">
-		  <tbody>
-		  	<tr>
-		      <th scope="col">Product</th>
-		      <th scope="col">Product Name</th>
-		      <th scope="col">Quantity</th>
-		      <th scope="col">Price</th>
-		    </tr>
-	  		<c:forEach items="${sessionScope.shoppingCart.productMap}" var="productMapItem">
-		  		<tr>
-		  			<td><img src="${productMapItem.key.productImageList[0]}" onerror="this.src='http://www.wellesleysocietyofartists.org/wp-content/uploads/2015/11/image-not-found.jpg'"
-		       			width="150" height="150" /> <br></td>
-			  		<td> ${ productMapItem.key.productName } </td>
-			  		<td>${ productMapItem.value }</td>
-			  		<td>HKD ${ productMapItem.key.price * productMapItem.value}</td>
-			  	</tr>
-	  		</c:forEach>
-	  		<tr>
-	  			<td></td>
-	  			<td></td>
-	  			<td></td>
-	  			<td><b>Total Amount:</b></td>
-	  		<tr>
-	  		<tr>
-	  			<td></td>
-	  			<td></td>
-	  			<td></td>
-	  			<td>HKD ${sessionScope.shoppingCart.totalAmount }</td>
-	  		<tr>
-		  </tbody>
-		</table>
-		
-		<br><br><br>
-		
-		<form name="placeOrder" action="deliveryInfoForm" method="post">
-			<button type="button" class="btn btn-primary" style="width:20%;margin-left:65%;margin-right:15%;" onClick="checkLogin()">Confirm & Place Order</button>
-		</form>
-	</c:if>
+	<h3 style="margin-left:45px; color: #EB6864;">Delivery Information Form</h3>
 </body>
 </html>
