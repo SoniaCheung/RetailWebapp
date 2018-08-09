@@ -1,5 +1,7 @@
 package com.sonia.controllers;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -8,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.sonia.entities.Order;
+import com.sonia.entities.OrderedProduct;
 import com.sonia.pageLogics.PlaceOrderLogic;
 
 @Controller
@@ -22,8 +26,11 @@ public class PlaceOrderController {
 	}
 
 	public String goToConfirmationPage(HttpServletRequest request, HttpSession session) {
-		placeOrderLogic.createOrderedProductByShoppingCart(session);
-		placeOrderLogic.createNewOrderByInfo(request, session);
+		List<OrderedProduct> orderedProducts = placeOrderLogic.createOrderedProductByShoppingCart(session);
+		Order order = placeOrderLogic.createNewOrderByInfo(request, session, orderedProducts);
+		
+		request.setAttribute("order", order);
+		
 		return "confirmationPage";
 	}
 
