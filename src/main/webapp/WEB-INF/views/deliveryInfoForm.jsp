@@ -59,6 +59,32 @@
 	  	</c:if>
 	</nav>
 	
+	<br>
 	<h3 style="margin-left:45px; color: #EB6864;">Delivery Information Form</h3>
+	<br>
+	
+	<form action="submitDeliveryForm" method="POST">
+		<table style="width:50%;margin-left:25%;margin-right:25%;">
+		<tbody>
+			<tr>
+				<td>
+					<label for="address">Address</label>
+      				<input name="address" type="text" class="form-control" placeholder="Enter delivery address" required="required"/>
+      				<br>
+      			</td>
+      		</tr>
+			<tr>
+      			<td>
+					<label for="remarks">Remarks</label>
+      				<input name="remarks" type="text" class="form-control" placeholder="Any remarks? " />
+      			</td>
+			</tr>
+			<tr>
+				<td align="right"><br><button type="submit" class="btn btn-primary">Submit</button></td>
+			</tr>
+		</tbody>
+		</table>
+	</form>
+	
 </body>
 </html>
