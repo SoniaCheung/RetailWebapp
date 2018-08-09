@@ -49,4 +49,5 @@
 	
 	<bean id="indexPageLogic" class="com.sonia.pageLogics.IndexPageLogic" />
 	<bean id="shoppingCartLogic" class="com.sonia.pageLogics.ShoppingCartLogic" />
+	<bean id="placeOrderLogic" class="com.sonia.pageLogics.PlaceOrderLogic" />
 </beans>
