@@ -47,6 +47,8 @@
 	<bean id="indexPageBasicProductDisplayFactory" class="com.sonia.displayObjectFactories.IndexPageBasicProductDisplayFactory" />
 	<bean id="shoppingCartFactory" class="com.sonia.displayObjectFactories.ShoppingCartFactory" />
 	
+	<bean id="orderHandler" class="com.sonia.entityHandlers.OrderHandler" />
+	
 	<bean id="indexPageLogic" class="com.sonia.pageLogics.IndexPageLogic" />
 	<bean id="shoppingCartLogic" class="com.sonia.pageLogics.ShoppingCartLogic" />
 </beans>
