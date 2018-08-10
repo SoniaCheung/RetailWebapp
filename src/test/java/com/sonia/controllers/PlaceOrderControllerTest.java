@@ -13,6 +13,7 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.ui.ModelMap;
 
 import com.sonia.entities.Order;
 import com.sonia.entities.OrderedProduct;
@@ -25,9 +26,13 @@ public class PlaceOrderControllerTest {
 	@Mock
 	HttpSession session;
 	@Mock
+	ModelMap mockModelMap;
+	@Mock
 	List<OrderedProduct> orderedProducts;
 	@Mock
 	Order mockOrder;
+	@Mock
+	Order mockConfirmedOrder;
 	@Mock
 	PlaceOrderLogic placeOrderLogic;
 	@InjectMocks
@@ -50,12 +55,23 @@ public class PlaceOrderControllerTest {
 		when(placeOrderLogic.createOrderedProductByShoppingCart(session)).thenReturn(orderedProducts);
 		when(placeOrderLogic.createNewOrderByInfo(request, session, orderedProducts)).thenReturn(mockOrder);
 		
-		String result = controller.goToConfirmationPage(request, session);
+		String result = controller.goToConfirmationPage(mockModelMap, request, session);
 		
+		verify(mockModelMap).addAttribute("order", mockOrder);
 		verify(placeOrderLogic).createOrderedProductByShoppingCart(session);
 		verify(placeOrderLogic).createNewOrderByInfo(request, session, orderedProducts);
 		verify(request).setAttribute("order", mockOrder);
 		assertEquals("confirmationPage", result);
 	}
 
+	@Test
+	public void confirmOrder_should_call_required_logic_methods_and_redirect_to_order_summary_page(){
+		when(mockModelMap.get("order")).thenReturn(mockOrder);
+		when(placeOrderLogic.confirmOrder(mockOrder)).thenReturn(mockConfirmedOrder);
+		
+		controller.confirmOrder(mockModelMap, request, session);
+		
+		verify(placeOrderLogic).confirmOrder(mockOrder);
+		verify(request).setAttribute("confirmedOrder", mockConfirmedOrder);
+	}
 }

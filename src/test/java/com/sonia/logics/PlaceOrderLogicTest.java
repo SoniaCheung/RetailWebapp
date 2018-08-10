@@ -17,6 +17,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import com.sonia.daos.OrderDao;
+import com.sonia.daos.OrderedProductDao;
 import com.sonia.displayObjects.ShoppingCart;
 import com.sonia.entities.Order;
 import com.sonia.entities.OrderedProduct;
@@ -55,9 +57,25 @@ public class PlaceOrderLogicTest {
 	@Mock
 	List<OrderedProduct> mockOrderedProducts;
 	@Mock
+	Iterator<OrderedProduct> mockOrderedProductsIterator;
+	@Mock
+	OrderedProduct mockOrderedProduct;
+	@Mock
+	OrderedProduct mockOrderedProduct2;
+	@Mock
+	OrderedProduct mockConfirmedOrderedProduct;
+	@Mock
+	OrderedProduct mockConfirmedOrderedProduct2;
+	@Mock
+	OrderDao orderDao;
+	@Mock
+	OrderedProductDao orderedProductDao;
+	@Mock
 	User mockUser;
 	@Mock
 	Order mockOrder;
+	@Mock
+	Order mockConfirmedOrder;
 	
 	@InjectMocks
 	PlaceOrderLogic placeOrderLogic = new PlaceOrderLogic();
@@ -105,6 +123,25 @@ public class PlaceOrderLogicTest {
 	
 		verify(orderFactory).createOrder(mockUser, mockOrderedProducts, deliveryAddress, null, remarks);
 		assertNotNull(result);
+	}
+	
+	@Test
+	public void confirmOrder_should_add_order_to_database_then_return_the_result() {
+		when(orderDao.addOrUpdateEntity(mockOrder)).thenReturn(mockConfirmedOrder);
+		when(mockOrder.getOrderedProductList()).thenReturn(mockOrderedProducts);
+		when(mockOrderedProducts.iterator()).thenReturn(mockOrderedProductsIterator);
+		when(mockOrderedProductsIterator.hasNext()).thenReturn(true).thenReturn(true).thenReturn(false);
+		when(mockOrderedProductsIterator.next()).thenReturn(mockOrderedProduct).thenReturn(mockOrderedProduct2);
+		when(orderedProductDao.addOrUpdateEntity(mockOrderedProduct)).thenReturn(mockConfirmedOrderedProduct);
+		when(orderedProductDao.addOrUpdateEntity(mockOrderedProduct2)).thenReturn(mockConfirmedOrderedProduct2);
+		
+		Order result = placeOrderLogic.confirmOrder(mockOrder);
+		
+		verify(orderDao).addOrUpdateEntity(mockOrder);
+		verify(orderedProductDao).addOrUpdateEntity(mockOrderedProduct);
+		verify(orderedProductDao).addOrUpdateEntity(mockOrderedProduct2);
+		verify(mockConfirmedOrder).setOrderedProductList(any());
+		assertEquals(mockConfirmedOrder, result);
 	}
 	
 	private void setupMockProducts() {

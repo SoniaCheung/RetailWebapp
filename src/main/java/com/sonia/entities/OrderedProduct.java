@@ -45,6 +45,13 @@ public class OrderedProduct implements GenericEntity{
 	public void setId(int id) {
 		this.id = id;
 	}
+	public Order getOrder() {
+		return order;
+	}
+	public void setOrder(Order order) {
+		this.order = order;
+	}
+
 	public Product getProduct() {
 		return product;
 	}

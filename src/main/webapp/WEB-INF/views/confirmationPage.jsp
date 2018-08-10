@@ -116,6 +116,10 @@
 	</table>
 	
 	<br><br>
-	<button type="submit" class="btn btn-primary" style="width:15%;margin-left:70%;margin-right:15%;text-align:center">Submit</button>
+	
+	<form action="confirmOrder" method="POST" >
+		<button type="submit" class="btn btn-primary" style="width:15%;margin-left:70%;margin-right:15%;text-align:center">Submit</button>
+	</form>
+	
 </body>
 </html>
