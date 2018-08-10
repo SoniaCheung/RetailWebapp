@@ -25,6 +25,7 @@ public class PlaceOrderController {
 		return "deliveryInfoForm";
 	}
 
+	@RequestMapping(value="/confirmationPage", method = RequestMethod.POST)
 	public String goToConfirmationPage(HttpServletRequest request, HttpSession session) {
 		List<OrderedProduct> orderedProducts = placeOrderLogic.createOrderedProductByShoppingCart(session);
 		Order order = placeOrderLogic.createNewOrderByInfo(request, session, orderedProducts);
