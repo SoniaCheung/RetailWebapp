@@ -56,7 +56,7 @@ public class PlaceOrderLogic {
 		return orderFactory.createOrder(user, orderedProducts, deliveryAddress, null, remarks);
 	}
 
-	public Order confirmOrder(Order order) {
+	public Order confirmOrder(HttpSession session, Order order) {
 		Order confirmedOrder = orderDao.addOrUpdateEntity(order);
 		
 		List<OrderedProduct> confirmedOrderedProducts = new ArrayList<>();
@@ -68,6 +68,7 @@ public class PlaceOrderLogic {
 		}
 		confirmedOrder.setOrderedProductList(confirmedOrderedProducts);
 		
+		session.removeAttribute("shoppingCart");
 		return confirmedOrder;
 	}
 

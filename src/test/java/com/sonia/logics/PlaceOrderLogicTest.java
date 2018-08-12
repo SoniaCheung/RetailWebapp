@@ -126,7 +126,7 @@ public class PlaceOrderLogicTest {
 	}
 	
 	@Test
-	public void confirmOrder_should_add_order_to_database_then_return_the_result() {
+	public void confirmOrder_should_add_order_to_database_and_clean_up_the_shopping_cartthen_return_the_result() {
 		when(orderDao.addOrUpdateEntity(mockOrder)).thenReturn(mockConfirmedOrder);
 		when(mockOrder.getOrderedProductList()).thenReturn(mockOrderedProducts);
 		when(mockOrderedProducts.iterator()).thenReturn(mockOrderedProductsIterator);
@@ -135,12 +135,13 @@ public class PlaceOrderLogicTest {
 		when(orderedProductDao.addOrUpdateEntity(mockOrderedProduct)).thenReturn(mockConfirmedOrderedProduct);
 		when(orderedProductDao.addOrUpdateEntity(mockOrderedProduct2)).thenReturn(mockConfirmedOrderedProduct2);
 		
-		Order result = placeOrderLogic.confirmOrder(mockOrder);
+		Order result = placeOrderLogic.confirmOrder(session, mockOrder);
 		
 		verify(orderDao).addOrUpdateEntity(mockOrder);
 		verify(orderedProductDao).addOrUpdateEntity(mockOrderedProduct);
 		verify(orderedProductDao).addOrUpdateEntity(mockOrderedProduct2);
 		verify(mockConfirmedOrder).setOrderedProductList(any());
+		verify(session).removeAttribute("shoppingCart");
 		assertEquals(mockConfirmedOrder, result);
 	}
 	

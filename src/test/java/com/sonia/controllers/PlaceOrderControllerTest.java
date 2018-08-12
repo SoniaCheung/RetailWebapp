@@ -17,6 +17,7 @@ import org.springframework.ui.ModelMap;
 
 import com.sonia.entities.Order;
 import com.sonia.entities.OrderedProduct;
+import com.sonia.entityHandlers.OrderHandler;
 import com.sonia.pageLogics.PlaceOrderLogic;
 
 public class PlaceOrderControllerTest {
@@ -35,8 +36,12 @@ public class PlaceOrderControllerTest {
 	Order mockConfirmedOrder;
 	@Mock
 	PlaceOrderLogic placeOrderLogic;
+	@Mock
+	OrderHandler orderHandler;
 	@InjectMocks
 	PlaceOrderController controller = new PlaceOrderController();
+	
+	double totalAmount = 59.9;
 	
 	@Before
 	public void setup() {
@@ -65,13 +70,16 @@ public class PlaceOrderControllerTest {
 	}
 
 	@Test
-	public void confirmOrder_should_call_required_logic_methods_and_redirect_to_order_summary_page(){
+	public void confirmOrder_should_call_required_logic_methods_then_return_order_summary_page(){
 		when(mockModelMap.get("order")).thenReturn(mockOrder);
-		when(placeOrderLogic.confirmOrder(mockOrder)).thenReturn(mockConfirmedOrder);
+		when(placeOrderLogic.confirmOrder(session, mockOrder)).thenReturn(mockConfirmedOrder);
+		when(orderHandler.calculateOrderTotalCost(mockConfirmedOrder)).thenReturn(totalAmount);
 		
-		controller.confirmOrder(mockModelMap, request, session);
+		String result = controller.confirmOrder(mockModelMap, request, session);
 		
-		verify(placeOrderLogic).confirmOrder(mockOrder);
+		verify(placeOrderLogic).confirmOrder(session, mockOrder);
 		verify(request).setAttribute("confirmedOrder", mockConfirmedOrder);
+		verify(request).setAttribute("totalAmount", totalAmount);
+		assertEquals("orderSummaryPage", result);
 	}
 }

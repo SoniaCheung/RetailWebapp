@@ -14,6 +14,7 @@ import org.springframework.ui.ModelMap;
 
 import com.sonia.entities.Order;
 import com.sonia.entities.OrderedProduct;
+import com.sonia.entityHandlers.OrderHandler;
 import com.sonia.pageLogics.PlaceOrderLogic;
 
 @Controller
@@ -22,6 +23,8 @@ public class PlaceOrderController {
 
 	@Resource(name="placeOrderLogic")
 	PlaceOrderLogic placeOrderLogic;
+	@Resource(name="orderHandler")
+	OrderHandler orderHandler;
 	
 	@RequestMapping(value="/deliveryInfoForm", method = RequestMethod.POST)
 	public String goToDeliveryInfoFormPage(HttpServletRequest request, HttpSession session) {
@@ -43,9 +46,11 @@ public class PlaceOrderController {
 	public String confirmOrder(ModelMap model, HttpServletRequest request, HttpSession session) {
 		Order order = (Order) model.get("order");
 		
-		Order confirmedOrder = placeOrderLogic.confirmOrder(order);
+		Order confirmedOrder = placeOrderLogic.confirmOrder(session, order);
+		double totalAmount = orderHandler.calculateOrderTotalCost(confirmedOrder);
 		
 		request.setAttribute("confirmedOrder", confirmedOrder);
+		request.setAttribute("totalAmount", totalAmount);
 		return "orderSummaryPage";
 	}
 
