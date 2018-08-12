@@ -79,7 +79,7 @@
 			<tr>
       			<td>
 					<label for="password">Password</label>
-      				<input name="password" type="text" class="form-control" placeholder="Enter password" required="required"/>
+      				<input name="password" type="password" class="form-control" placeholder="Enter password" required="required"/>
       			</td>
 			</tr>
 			<tr>
