@@ -66,7 +66,7 @@
 	<br>
 	
 	<br>
-		<h4 style="margin-left:45px; color: #EB6864;">Order Number : ${ order.id }</h4>
+		<h4 style="margin-left:45px; color: #EB6864;">Order Number : ${ confirmedOrder.id }</h4>
 	<br>
 	
 	<table style="width:70%;margin-left:15%;margin-right:15%;text-align:center">
@@ -77,7 +77,7 @@
 		      <th scope="col">Quantity</th>
 		      <th scope="col">Price</th>
 		    </tr>
-	  		<c:forEach items="${order.orderedProductList}" var="orderedProduct">
+	  		<c:forEach items="${confirmedOrder.orderedProductList}" var="orderedProduct">
 		  		<tr>
 		  			<td><img src="${ orderedProduct.product.productImageList[0]}" onerror="this.src='http://www.wellesleysocietyofartists.org/wp-content/uploads/2015/11/image-not-found.jpg'"
 		       			width="150" height="150" /> <br></td>
@@ -109,12 +109,12 @@
 		  <tbody>
 		  	<tr>
 		  		<th scope="row"> Delivery address</th>
-		  		<td>${ order.deliveryAddress }</td>
+		  		<td>${ confirmedOrder.deliveryAddress }</td>
 		  	</tr>
 		  	
 		  	<tr>
 		  		<th scope="row"> Remarks</th>
-		  		<td>${ order.remarks }</td>
+		  		<td>${ confirmedOrder.remarks }</td>
 		  	</tr>
 		  </tbody>
 	</table>
