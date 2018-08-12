@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import com.sonia.daos.OrderDao;
 import com.sonia.daos.OrderedProductDao;
+import com.sonia.daos.ProductDao;
 import com.sonia.displayObjects.ShoppingCart;
 import com.sonia.entities.Order;
 import com.sonia.entities.OrderedProduct;
@@ -29,6 +30,8 @@ public class PlaceOrderLogic {
 	OrderFactory orderFactory;
 	@Resource(name="orderDao")
 	OrderDao orderDao;
+	@Resource(name = "productDao")
+	ProductDao productDao;
 	
 	public List<OrderedProduct> createOrderedProductByShoppingCart(HttpSession session) {
 		List<OrderedProduct> orderedProducts = new ArrayList<>();
@@ -65,6 +68,11 @@ public class PlaceOrderLogic {
 			op.setOrder(confirmedOrder);
 			OrderedProduct confirmedOrderedProduct = orderedProductDao.addOrUpdateEntity(op);
 			confirmedOrderedProducts.add(confirmedOrderedProduct);
+			
+			Product relatedProduct = productDao.getEntity(op.getProduct().getId());
+			int originalStock = relatedProduct.getStock();
+			relatedProduct.setStock(originalStock - op.getQuantity());
+			productDao.addOrUpdateEntity(relatedProduct);
 		}
 		confirmedOrder.setOrderedProductList(confirmedOrderedProducts);
 		

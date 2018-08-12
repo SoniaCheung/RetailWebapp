@@ -19,6 +19,7 @@ import org.mockito.MockitoAnnotations;
 
 import com.sonia.daos.OrderDao;
 import com.sonia.daos.OrderedProductDao;
+import com.sonia.daos.ProductDao;
 import com.sonia.displayObjects.ShoppingCart;
 import com.sonia.entities.Order;
 import com.sonia.entities.OrderedProduct;
@@ -71,6 +72,8 @@ public class PlaceOrderLogicTest {
 	@Mock
 	OrderedProductDao orderedProductDao;
 	@Mock
+	ProductDao productDao;
+	@Mock
 	User mockUser;
 	@Mock
 	Order mockOrder;
@@ -80,10 +83,14 @@ public class PlaceOrderLogicTest {
 	@InjectMocks
 	PlaceOrderLogic placeOrderLogic = new PlaceOrderLogic();
 	
+	int mockProductId = 9;
+	int mockProductId2 = 10;
 	Integer quantity = 5;
 	Integer quantity2 = 10;
 	double price = 30.5;
 	double price2 = 8999.9;
+	int productOriginalStock = 500;
+	int productOriginalStock2 = 800;
 	
 	String deliveryAddress = "123 Road, ABC Street, Hong Kong";
 	String remarks = "Remarks";
@@ -126,7 +133,9 @@ public class PlaceOrderLogicTest {
 	}
 	
 	@Test
-	public void confirmOrder_should_add_order_to_database_and_clean_up_the_shopping_cartthen_return_the_result() {
+	public void confirmOrder_should_add_order_to_database_update_product_stock_and_clean_up_the_shopping_cartthen_return_the_result() {
+		setupMockProducts();
+		
 		when(orderDao.addOrUpdateEntity(mockOrder)).thenReturn(mockConfirmedOrder);
 		when(mockOrder.getOrderedProductList()).thenReturn(mockOrderedProducts);
 		when(mockOrderedProducts.iterator()).thenReturn(mockOrderedProductsIterator);
@@ -135,18 +144,33 @@ public class PlaceOrderLogicTest {
 		when(orderedProductDao.addOrUpdateEntity(mockOrderedProduct)).thenReturn(mockConfirmedOrderedProduct);
 		when(orderedProductDao.addOrUpdateEntity(mockOrderedProduct2)).thenReturn(mockConfirmedOrderedProduct2);
 		
+		when(mockOrderedProduct.getProduct()).thenReturn(mockProduct);
+		when(mockOrderedProduct2.getProduct()).thenReturn(mockProduct2);
+		when(mockOrderedProduct.getQuantity()).thenReturn(quantity);
+		when(mockOrderedProduct2.getQuantity()).thenReturn(quantity2);
+		when(productDao.getEntity(mockProductId)).thenReturn(mockProduct);
+		when(productDao.getEntity(mockProductId2)).thenReturn(mockProduct2);
+		
 		Order result = placeOrderLogic.confirmOrder(session, mockOrder);
 		
 		verify(orderDao).addOrUpdateEntity(mockOrder);
 		verify(orderedProductDao).addOrUpdateEntity(mockOrderedProduct);
 		verify(orderedProductDao).addOrUpdateEntity(mockOrderedProduct2);
+		verify(mockProduct).setStock(productOriginalStock - quantity);
+		verify(mockProduct2).setStock(productOriginalStock2 - quantity2);
+		verify(productDao).addOrUpdateEntity(mockProduct);
+		verify(productDao).addOrUpdateEntity(mockProduct2);
 		verify(mockConfirmedOrder).setOrderedProductList(any());
 		verify(session).removeAttribute("shoppingCart");
 		assertEquals(mockConfirmedOrder, result);
 	}
 	
 	private void setupMockProducts() {
+		when(mockProduct.getId()).thenReturn(mockProductId);
+		when(mockProduct2.getId()).thenReturn(mockProductId2);
 		when(mockProduct.getPrice()).thenReturn(price);
 		when(mockProduct2.getPrice()).thenReturn(price2);
+		when(mockProduct.getStock()).thenReturn(productOriginalStock);
+		when(mockProduct2.getStock()).thenReturn(productOriginalStock2);
 	}
 }
