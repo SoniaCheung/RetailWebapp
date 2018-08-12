@@ -16,7 +16,10 @@ public class OrderHandler {
 			result += product.getPrice() * product.getQuantity();
 		}
 		
-		double couponDiscountRate = order.getCoupon().getCouponRate();
+		double couponDiscountRate = 1.0;
+		if(order.getCoupon() != null) {
+			couponDiscountRate = order.getCoupon().getCouponRate();
+		}
 		
 		return result * couponDiscountRate;
 	}
