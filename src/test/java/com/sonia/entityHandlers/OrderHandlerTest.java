@@ -45,7 +45,7 @@ public class OrderHandlerTest {
 	}
 	
 	@Test
-	public void test() {
+	public void orderHandler_when_coupon_is_not_null_then_return_correct_totalAmount() {
 		when(mockOrder.getOrderedProductList()).thenReturn(mockOrderedProductList);
 		when(mockOrderedProductList.iterator()).thenReturn(mockOrderedProductListIterator);
 		when(mockOrderedProductListIterator.hasNext()).thenReturn(true).thenReturn(true).thenReturn(false);
@@ -63,4 +63,21 @@ public class OrderHandlerTest {
 		assertEquals(1988.8, result, 0.01);
 	}
 
+	@Test
+	public void orderHandler_when_coupon_is_null_then_return_correcr_total_amount() {
+		when(mockOrder.getOrderedProductList()).thenReturn(mockOrderedProductList);
+		when(mockOrderedProductList.iterator()).thenReturn(mockOrderedProductListIterator);
+		when(mockOrderedProductListIterator.hasNext()).thenReturn(true).thenReturn(true).thenReturn(false);
+		when(mockOrderedProductListIterator.next()).thenReturn(mockOrderedProduct).thenReturn(mockOrderedProduct2);
+	
+		when(mockOrderedProduct.getPrice()).thenReturn(price);
+		when(mockOrderedProduct2.getPrice()).thenReturn(price2);
+		when(mockOrderedProduct.getQuantity()).thenReturn(quantity);
+		when(mockOrderedProduct2.getQuantity()).thenReturn(quantity2);
+		when(mockOrder.getCoupon()).thenReturn(null);
+		
+		double result = orderHandler.calculateOrderTotalCost(mockOrder);
+		
+		assertEquals(2260, result, 0.01);
+	}
 }
