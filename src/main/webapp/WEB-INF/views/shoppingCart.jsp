@@ -17,7 +17,6 @@
 			window.alert("Please login first.");
 			return false;
 		} else {
-			window.alert("Logined");
 			document.placeOrder.submit();
 			return true;
 		}
