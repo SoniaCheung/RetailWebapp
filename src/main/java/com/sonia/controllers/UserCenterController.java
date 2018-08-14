@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sonia.entities.Order;
 import com.sonia.pageLogics.ViewHistoryLogic;
@@ -32,4 +33,11 @@ public class UserCenterController {
 		return "viewHistory";
 	}
 
+	@RequestMapping(value="/viewOrder")
+	public String viewOrderDetail(@RequestParam("id") int orderId, HttpServletRequest request, HttpSession session){
+		Order order = viewHistoryLogic.viewOrderDetail(orderId, session);
+		request.setAttribute("order", order);
+		
+		return "viewOrderDetail";
+	}
 }

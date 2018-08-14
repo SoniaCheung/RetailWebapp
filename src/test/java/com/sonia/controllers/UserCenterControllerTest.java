@@ -27,9 +27,13 @@ public class UserCenterControllerTest {
 	ViewHistoryLogic viewHistoryLogic;
 	@Mock
 	List<Order> mockOrderList;
+	@Mock
+	Order mockOrder;
 	@InjectMocks
 	UserCenterController userCenterController = new UserCenterController();
 
+	int orderId = 101;
+	
 	@Before
 	public void setup() {
 		MockitoAnnotations.initMocks(this);
@@ -51,5 +55,15 @@ public class UserCenterControllerTest {
 		verify(viewHistoryLogic).personalOrderHistory(session);
 		verify(request).setAttribute("orders", mockOrderList);
 		assertEquals("viewHistory", result);
+	}
+	
+	@Test
+	public void viewOrderDetail_should_assign_order_to_the_request_then_return_view_order_detail_page() {
+		when(viewHistoryLogic.viewOrderDetail(orderId, session)).thenReturn(mockOrder);
+		
+		String result = userCenterController.viewOrderDetail(orderId, request, session);
+	
+		verify(request).setAttribute("order", mockOrder);
+		assertEquals("viewOrderDetail", result);
 	}
 }
