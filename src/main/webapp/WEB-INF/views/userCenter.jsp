@@ -52,6 +52,13 @@
 				<img src="http://cdn.onlinewebfonts.com/svg/img_518099.png"
 			       			width="50" height="50" hspace="10"/></a>
 		</c:if>
+				
+		<!-- User Center -->
+		<c:if test="${ not empty sessionScope.user }">
+			<a href="userCenter">
+				<img src="http://cdn.onlinewebfonts.com/svg/img_55925.png"
+			       			width="50" height="50" hspace="10"/></a>
+		</c:if>
 		
 		<!-- User Log out -->
 		<c:if test="${ not empty sessionScope.user }">
