@@ -53,7 +53,7 @@ public class LoginControllerTest {
 		
 		verify(userDao).verifyLoginInfo(username, password);
 		verify(httpSession).setAttribute("user", user);
-		assertEquals("userCenter", result);
+		assertEquals("redirect:userCenter", result);
 	};
 
 	@Test

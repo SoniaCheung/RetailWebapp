@@ -70,24 +70,32 @@
 	  </div>
 	</nav>
 	
-	<br>
-		<h3 style="margin-left:45px; color: #EB6864;">User Center</h3>
-	<br>
+	<c:if test="${ not empty sessionScope.user }">
+		
+		<br>
+			<h3 style="margin-left:45px; color: #EB6864;">User Center</h3>
+		<br>
+		<table style="margin-left:15%;margin-right:15%;">
+			  <tbody>
+		  		<tr>
+			  		<td><img src="https://vignette.wikia.nocookie.net/rocketleague/images/b/b9/Xbox_view_button.png/revision/latest?cb=20171128174652"
+				       			width="60" height="60" hspace="10" vspace="10"/></td>
+			  		<td><form action="viewPersonalOrderHistory" method="POST"><button type="submit" class="btn btn-link">          View History</button></form></td>
+			  	</tr>
+			  	<tr>
+			  		<td><img src="https://png.icons8.com/metro/1600/edit.png"
+				       			width="60" height="60" hspace="10" vspace="10"/></td>
+			  		<td><form action="updateUserInfo" method="POST"><button type="submit" class="btn btn-link">          Update Information</button></form></td>
+			  	</tr>
+			  </tbody>
+		</table>
+	</c:if>
 	
-	<table style="margin-left:15%;margin-right:15%;">
-		  <tbody>
-	  		<tr>
-		  		<td><img src="https://vignette.wikia.nocookie.net/rocketleague/images/b/b9/Xbox_view_button.png/revision/latest?cb=20171128174652"
-			       			width="60" height="60" hspace="10" vspace="10"/></td>
-		  		<td><form action="viewHistory" method="POST"><button type="submit" class="btn btn-link">          View History</button></form></td>
-		  	</tr>
-		  	<tr>
-		  		<td><img src="https://png.icons8.com/metro/1600/edit.png"
-			       			width="60" height="60" hspace="10" vspace="10"/></form></td>
-		  		<td><form action="updateUserInfo" method="POST"><button type="submit" class="btn btn-link">          Update Information</button></form></td>
-		  	</tr>
-		  </tbody>
-	</table>
+	<c:if test="${ empty sessionScope.user }">
+		<br><br><br><br><br><br><br>
+		<h4 align=center>Oops! Please login first.</h4>
+		<br>
+	</c:if>
 			  	
 </body>
 </html>

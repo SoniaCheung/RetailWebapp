@@ -29,7 +29,7 @@ public class LoginController {
 		User validUser = userDao.verifyLoginInfo(username, password);
 		if(validUser != null) {
 			session.setAttribute("user", validUser);
-			return "userCenter";
+			return "redirect:userCenter";
 		} else {
 			request.setAttribute("loginError", "Invalid inputs. Please try again.");
 			return "userLogin";
