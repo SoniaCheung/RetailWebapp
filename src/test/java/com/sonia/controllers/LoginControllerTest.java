@@ -68,4 +68,14 @@ public class LoginControllerTest {
 		verify(request).setAttribute("loginError", "Invalid inputs. Please try again.");
 		assertEquals("userLogin", result);
 	};
+	
+	@Test
+	public void logout_should_clean_the_use_information_in_the_session_then_return_to_original_page() {
+		when(request.getHeader("Referer")).thenReturn("productDetail?id=1");
+		
+		String result = loginController.logOut(request, httpSession);
+		
+		verify(httpSession).removeAttribute("user");
+		assertEquals("redirect:productDetail?id=1", result);
+	}
 }

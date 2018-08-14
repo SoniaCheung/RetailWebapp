@@ -36,4 +36,12 @@ public class LoginController {
 		}
 	}
 
+	@RequestMapping(value="/userLogout")
+	public String logOut(HttpServletRequest request, HttpSession session) {
+		session.removeAttribute("user");
+		
+		String referer = request.getHeader("Referer");
+		return "redirect:"+ referer;
+	}
+
 }
