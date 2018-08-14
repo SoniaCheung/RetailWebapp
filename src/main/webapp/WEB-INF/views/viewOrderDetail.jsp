@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
 <link href="./resources/css/bootstrap.css" rel="stylesheet">
@@ -10,7 +11,7 @@
 <script src="./resources/js/searchForm.js"></script>
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Buy Now! - Order History</title>
+<title>Buy Now! - Order Details</title>
 </head>
 <body>
 	<!-- navigation bar -->
@@ -70,36 +71,65 @@
 	  </div>
 	</nav>
 	
-	<c:if test="${ not empty sessionScope.user }">
+	<c:if test="${ not empty order }">
+		<br>
+			<h4 style="margin-left:45px; color: #EB6864;">Order Number : ${ order.id }</h4>
+		<br>
 		
-		<br>
-			<h3 style="margin-left:45px; color: #EB6864;">Order History</h3>
-		<br>
 		<table style="width:70%;margin-left:15%;margin-right:15%;text-align:center">
 			  <tbody>
 			  	<tr>
-				  <th scope="col">Order Number</th>
-			      <th scope="col">Delivery Address</th>
-			      <th scope="col">Remark</th>
-			      <th scope="col">Status</th>
-			  	</tr>
-			  	<c:forEach items="${orders}" var="order">
+			      <th scope="col">Product</th>
+			      <th scope="col">Product Name</th>
+			      <th scope="col">Quantity</th>
+			      <th scope="col">Price</th>
+			    </tr>
+		  		<c:forEach items="${order.orderedProductList}" var="orderedProduct">
 			  		<tr>
-						<td><a href="viewOrder?id=${order.id}">${order.id}</a></td>
-						<td>${order.deliveryAddress}</td>
-						<td>${order.remarks}</td>
-						<td>In Progress</td>
+			  			<td><img src="${ orderedProduct.product.productImageList[0]}" onerror="this.src='http://www.wellesleysocietyofartists.org/wp-content/uploads/2015/11/image-not-found.jpg'"
+			       			width="150" height="150" /> <br></td>
+				  		<td> ${ orderedProduct.product.productName } </td>
+				  		<td>${ orderedProduct.quantity }</td>
+				  		<td>HKD ${ orderedProduct.price * orderedProduct.quantity }</td>
 				  	</tr>
-			  	</c:forEach>
+		  		</c:forEach>
+		  		<tr>
+		  			<td></td>
+		  			<td></td>
+		  			<td></td>
+		  			<td><b>Total Amount:</b></td>
+		  		<tr>
+		  		<tr>
+		  			<td></td>
+		  			<td></td>
+		  			<td></td>
+		  			<td>HKD ${ totalAmount }</td>
+		  		<tr>
 			  </tbody>
 		</table>
+		
+		<br>
+			<h4 style="margin-left:45px; color: #EB6864;">Delivery Information</h4>
+		<br>
+	
+		<table style="width:70%;margin-left:15%;margin-right:15%;text-align:center">
+			  <tbody>
+			  	<tr>
+			  		<th scope="row"> Delivery address</th>
+			  		<td>${ order.deliveryAddress }</td>
+			  	</tr>
+			  	
+			  	<tr>
+			  		<th scope="row"> Remarks</th>
+			  		<td>${ order.remarks }</td>
+			  	</tr>
+			  </tbody>
+		</table>
+	
 	</c:if>
 	
-	<c:if test="${ empty sessionScope.user }">
-		<br><br><br><br><br><br><br>
-		<h4 align=center>Oops! Please login first.</h4>
-		<br>
+	<c:if test="${ empty order }">
+		<h3>Sorry, there are some errors occur or you are not authorized to check this order. Please try later.</h3>
 	</c:if>
-			  	
 </body>
 </html>
