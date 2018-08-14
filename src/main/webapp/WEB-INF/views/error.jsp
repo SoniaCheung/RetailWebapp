@@ -47,9 +47,19 @@
 		<a href="shoppingCart"><img src="https://cdn4.iconfinder.com/data/icons/shopping-21/64/shopping-06-512.png"
 			       			width="60" height="60" hspace="10"/></a>
 		<!-- User Login -->
-		<a href="userLogin">
-			<img src="http://cdn.onlinewebfonts.com/svg/img_518099.png"
-		       			width="50" height="50" hspace="10"/></a>
+		<c:if test="${ empty sessionScope.user }">
+			<a href="userLogin">
+				<img src="http://cdn.onlinewebfonts.com/svg/img_518099.png"
+			       			width="50" height="50" hspace="10"/></a>
+		</c:if>
+		
+		<!-- User Log out -->
+		<c:if test="${ not empty sessionScope.user }">
+			<a href="userLogout">
+				<img src="http://cdn.onlinewebfonts.com/svg/img_71488.png"
+			       			width="50" height="50" hspace="10"/></a>
+		</c:if>
+		
 		<!-- Registration -->
 		<c:if test="${ empty sessionScope.user }">
 	  		<div>
