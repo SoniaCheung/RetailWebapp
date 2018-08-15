@@ -14,6 +14,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sonia.entities.Order;
 import com.sonia.entities.User;
@@ -26,6 +27,8 @@ public class UserCenterControllerTest {
 	HttpServletRequest request;
 	@Mock
 	HttpSession session;
+	@Mock
+	RedirectAttributes redir;
 	@Mock
 	ViewHistoryLogic viewHistoryLogic;
 	@Mock
@@ -92,10 +95,10 @@ public class UserCenterControllerTest {
 		when(model.get("editUser")).thenReturn(mockUser);
 		when(editUserLogic.editUser(request, session, mockUser)).thenReturn(true);
 		
-		String result = userCenterController.submitEditUserInfo(model, request, session);
+		String result = userCenterController.submitEditUserInfo(mockUser, request, session, redir);
 		
 		verify(editUserLogic).editUser(request, session, mockUser);
-		verify(request).setAttribute("message", "Your information was successfully updated.");
+		verify(redir).addFlashAttribute("message", "Your information was successfully updated.");
 		assertEquals("redirect:userCenter", result);
 	}
 	
@@ -105,10 +108,10 @@ public class UserCenterControllerTest {
 		when(editUserLogic.editUser(request, session, mockUser)).thenReturn(false);
 		when(request.getHeader("Referer")).thenReturn("updateUserInfo");
 		
-		String result = userCenterController.submitEditUserInfo(model, request, session);
+		String result = userCenterController.submitEditUserInfo(mockUser, request, session, redir);
 		
 		verify(editUserLogic).editUser(request, session, mockUser);
-		verify(request).setAttribute("message", "Your original passowrd is not correct, please try again.");
+		verify(redir).addFlashAttribute("message", "Your original passowrd is not correct, please try again.");
 		assertEquals("redirect:updateUserInfo", result);
 	}
 }

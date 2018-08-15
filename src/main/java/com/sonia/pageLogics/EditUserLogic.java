@@ -19,6 +19,8 @@ public class EditUserLogic {
 		String expectedCurrentPw = loginedUser.getPassword();
 		
 		if(originalPw.equals(expectedCurrentPw)) {
+			editUser.setId(loginedUser.getId());
+			editUser.setUsername(loginedUser.getUsername());
 			User user = userDao.addOrUpdateEntity(editUser);
 			session.setAttribute("user", user);
 			return true;

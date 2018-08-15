@@ -11,6 +11,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sonia.entities.Order;
 import com.sonia.entities.User;
@@ -46,7 +47,7 @@ public class UserCenterController {
 		return "viewOrderDetail";
 	}
 
-	@RequestMapping(value="/updateUserInfo", method = RequestMethod.POST)
+	@RequestMapping(value="/updateUserInfo")
 	public String editUserInfo(ModelMap model, HttpServletRequest request, HttpSession session) {
 		User loginedUser = (User) session.getAttribute("user");
 		model.addAttribute("editUser", loginedUser);
@@ -55,16 +56,14 @@ public class UserCenterController {
 	}
 
 	@RequestMapping(value="/submitEditUserInfo", method = RequestMethod.POST)
-	public String submitEditUserInfo(ModelMap model, HttpServletRequest request, HttpSession session) {
-		User editUser = (User) model.get("editUser");
-		
+	public String submitEditUserInfo(User editUser, HttpServletRequest request, HttpSession session, RedirectAttributes redir) {
 		boolean successfullyEdit = editUserLogic.editUser(request, session, editUser);
 		
 		if ( successfullyEdit == true) {
-			request.setAttribute("message", "Your information was successfully updated.");
+			redir.addFlashAttribute("message", "Your information was successfully updated.");
 		    return "redirect:userCenter";
 		} else {
-			request.setAttribute("message", "Your original passowrd is not correct, please try again.");
+			redir.addFlashAttribute("message", "Your original passowrd is not correct, please try again.");
 			String referer = request.getHeader("Referer");
 			return "redirect:"+ referer;
 		}

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
 <link href="./resources/css/bootstrap.css" rel="stylesheet">
@@ -10,7 +11,7 @@
 <script src="./resources/js/searchForm.js"></script>
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Buy Now! - User Center</title>
+<title>Buy Now! - Update User Information</title>
 </head>
 <body>
 	<!-- navigation bar -->
@@ -78,9 +79,8 @@
 	</nav>
 	
 	<c:if test="${ not empty sessionScope.user }">
-		
 		<br>
-			<h3 style="margin-left:45px; color: #EB6864;">User Center</h3>
+			<h3 style="margin-left:45px; color: #EB6864;">Update Information</h3>
 		<br>
 		
 		<c:if test="${ not empty message }">
@@ -88,20 +88,40 @@
 			</p>
 		</c:if>
 		
-		<table style="margin-left:15%;margin-right:15%;">
-			  <tbody>
-		  		<tr>
-			  		<td><img src="https://vignette.wikia.nocookie.net/rocketleague/images/b/b9/Xbox_view_button.png/revision/latest?cb=20171128174652"
-				       			width="60" height="60" hspace="10" vspace="10"/></td>
-			  		<td><form action="viewPersonalOrderHistory" method="POST"><button type="submit" class="btn btn-link">          View History</button></form></td>
-			  	</tr>
-			  	<tr>
-			  		<td><img src="https://png.icons8.com/metro/1600/edit.png"
-				       			width="60" height="60" hspace="10" vspace="10"/></td>
-			  		<td><form action="updateUserInfo" method="POST"><button type="submit" class="btn btn-link">          Update Information</button></form></td>
-			  	</tr>
-			  </tbody>
+	<form:form method="POST" action="submitEditUserInfo" modelAttribute="editUser">
+		<table style="width:70%;margin-left:15%;margin-right:15%;">
+			<tbody>
+				<tr>
+					<td>
+						<br><label for="currentPassword">Current Password</label>
+	      				<input name="currentPassword" type="password" class="form-control" placeholder="Enter current password" required="required"/>
+	      			</td>
+				</tr>
+				<tr>
+					<td>
+						<br><label for="password">New Password</label>
+	      				<form:input path="password" type="password" class="form-control" placeholder="Enter password" required="required"/>
+	      			</td>
+				</tr>
+				<tr>
+					<td>
+			      		<br><label for="email">Email address</label>
+			      		<form:input path="email" type="email" class="form-control" placeholder="Enter email" required="required"/>
+			      	</td>
+		   		</tr>
+				<tr>
+					<td>
+						<br><label for="address">Address</label>
+	      				<form:input path="address" type="text" class="form-control" placeholder="Enter address" required="required"/>
+	      			</td>
+				</tr>
+				<tr>
+					<td align="right"><br><button type="submit" class="btn btn-primary">Submit</button></td>
+				</tr>
+			</tbody>
 		</table>
+	</form:form>
+		
 	</c:if>
 	
 	<c:if test="${ empty sessionScope.user }">
@@ -109,6 +129,6 @@
 		<h4 align=center>Oops! Please login first.</h4>
 		<br>
 	</c:if>
-			  	
+	
 </body>
 </html>
