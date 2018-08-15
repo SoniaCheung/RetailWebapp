@@ -13,8 +13,11 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.ui.ModelMap;
 
 import com.sonia.entities.Order;
+import com.sonia.entities.User;
+import com.sonia.pageLogics.EditUserLogic;
 import com.sonia.pageLogics.ViewHistoryLogic;
 
 public class UserCenterControllerTest {
@@ -26,9 +29,15 @@ public class UserCenterControllerTest {
 	@Mock
 	ViewHistoryLogic viewHistoryLogic;
 	@Mock
+	EditUserLogic editUserLogic;
+	@Mock
 	List<Order> mockOrderList;
 	@Mock
 	Order mockOrder;
+	@Mock
+	User mockUser;
+	@Mock
+	ModelMap model;
 	@InjectMocks
 	UserCenterController userCenterController = new UserCenterController();
 
@@ -65,5 +74,41 @@ public class UserCenterControllerTest {
 	
 		verify(request).setAttribute("order", mockOrder);
 		assertEquals("viewOrderDetail", result);
+	}
+	
+	@Test
+	public void editUserInfo_should_return_edit_user_info_page() {
+		when(session.getAttribute("user")).thenReturn(mockUser);
+		
+		String result = userCenterController.editUserInfo(model, request, session);
+		
+		verify(model).addAttribute("editUser", mockUser);
+		assertEquals("updateUserInfo", result);
+		
+	}
+	
+	@Test
+	public void submitEditUserInfo_should_return_to_the_original_page_when_update_successed() {
+		when(model.get("editUser")).thenReturn(mockUser);
+		when(editUserLogic.editUser(request, session, mockUser)).thenReturn(true);
+		
+		String result = userCenterController.submitEditUserInfo(model, request, session);
+		
+		verify(editUserLogic).editUser(request, session, mockUser);
+		verify(request).setAttribute("message", "Your information was successfully updated.");
+		assertEquals("redirect:userCenter", result);
+	}
+	
+	@Test
+	public void submitEditUserInfo_should_return_to_the_update_user_page_when_the_update_failed() {
+		when(model.get("editUser")).thenReturn(mockUser);
+		when(editUserLogic.editUser(request, session, mockUser)).thenReturn(false);
+		when(request.getHeader("Referer")).thenReturn("updateUserInfo");
+		
+		String result = userCenterController.submitEditUserInfo(model, request, session);
+		
+		verify(editUserLogic).editUser(request, session, mockUser);
+		verify(request).setAttribute("message", "Your original passowrd is not correct, please try again.");
+		assertEquals("redirect:updateUserInfo", result);
 	}
 }
