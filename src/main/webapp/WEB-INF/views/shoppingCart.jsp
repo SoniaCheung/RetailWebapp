@@ -114,7 +114,7 @@
 		    </tr>
 	  		<c:forEach items="${sessionScope.shoppingCart.productMap}" var="productMapItem">
 		  		<tr>
-		  			<td><img src="${productMapItem.key.productImageList[0]}" onerror="this.src='http://www.wellesleysocietyofartists.org/wp-content/uploads/2015/11/image-not-found.jpg'"
+		  			<td><img src="${productMapItem.key.productImageList[0].imageLink}" onerror="this.src='http://www.wellesleysocietyofartists.org/wp-content/uploads/2015/11/image-not-found.jpg'"
 		       			width="150" height="150" /> <br></td>
 			  		<td> ${ productMapItem.key.productName } </td>
 			  		<td>${ productMapItem.value }</td>

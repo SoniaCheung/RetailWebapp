@@ -92,7 +92,7 @@
 		    </tr>
 	  		<c:forEach items="${order.orderedProductList}" var="orderedProduct">
 		  		<tr>
-		  			<td><img src="${ orderedProduct.product.productImageList[0]}" onerror="this.src='http://www.wellesleysocietyofartists.org/wp-content/uploads/2015/11/image-not-found.jpg'"
+		  			<td><img src="${ orderedProduct.product.productImageList[0].imageLink}" onerror="this.src='http://www.wellesleysocietyofartists.org/wp-content/uploads/2015/11/image-not-found.jpg'"
 		       			width="150" height="150" /> <br></td>
 			  		<td> ${ orderedProduct.product.productName } </td>
 			  		<td>${ orderedProduct.quantity }</td>
