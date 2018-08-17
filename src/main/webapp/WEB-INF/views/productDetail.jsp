@@ -80,7 +80,7 @@
 		  <tbody>
 		  	<tr>
 		  		<td>
-		  			<img src="${product.productImageList[0]}" onerror="this.src='http://www.wellesleysocietyofartists.org/wp-content/uploads/2015/11/image-not-found.jpg'"
+		  			<img src="${product.productImageList[0].imageLink}" onerror="this.src='http://www.wellesleysocietyofartists.org/wp-content/uploads/2015/11/image-not-found.jpg'"
 			       			width="500" height="500" />
 			    </td>
 			    <td>
