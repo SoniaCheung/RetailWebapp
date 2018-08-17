@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sonia.entities.Order;
+import com.sonia.entityHandlers.OrderHandler;
 import com.sonia.pageLogics.ViewHistoryLogic;
 
 @Controller
@@ -19,6 +20,8 @@ public class UserCenterController {
 
 	@Resource(name="viewHistoryLogic")
 	ViewHistoryLogic viewHistoryLogic;
+	@Resource(name="orderHandler")
+	OrderHandler orderHandler;
 	
 	@RequestMapping(value="/userCenter")
 	public String goToUserCenter(HttpServletRequest request, HttpSession session) {
@@ -37,6 +40,8 @@ public class UserCenterController {
 	public String viewOrderDetail(@RequestParam("id") int orderId, HttpServletRequest request, HttpSession session){
 		Order order = viewHistoryLogic.viewOrderDetail(orderId, session);
 		request.setAttribute("order", order);
+		double totalAmount = orderHandler.calculateOrderTotalCost(order);
+		request.setAttribute("totalAmount", totalAmount);
 		
 		return "viewOrderDetail";
 	}

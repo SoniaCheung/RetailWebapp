@@ -15,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import com.sonia.entities.Order;
+import com.sonia.entityHandlers.OrderHandler;
 import com.sonia.pageLogics.ViewHistoryLogic;
 
 public class UserCenterControllerTest {
@@ -26,6 +27,8 @@ public class UserCenterControllerTest {
 	@Mock
 	ViewHistoryLogic viewHistoryLogic;
 	@Mock
+	OrderHandler orderHandler;
+	@Mock
 	List<Order> mockOrderList;
 	@Mock
 	Order mockOrder;
@@ -33,6 +36,7 @@ public class UserCenterControllerTest {
 	UserCenterController userCenterController = new UserCenterController();
 
 	int orderId = 101;
+	double totalAmount = 122350.0;
 	
 	@Before
 	public void setup() {
@@ -60,9 +64,11 @@ public class UserCenterControllerTest {
 	@Test
 	public void viewOrderDetail_should_assign_order_to_the_request_then_return_view_order_detail_page() {
 		when(viewHistoryLogic.viewOrderDetail(orderId, session)).thenReturn(mockOrder);
+		when(orderHandler.calculateOrderTotalCost(mockOrder)).thenReturn(totalAmount);
 		
 		String result = userCenterController.viewOrderDetail(orderId, request, session);
 	
+		verify(request).setAttribute("totalAmount", totalAmount);
 		verify(request).setAttribute("order", mockOrder);
 		assertEquals("viewOrderDetail", result);
 	}
