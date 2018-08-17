@@ -19,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.sonia.entities.Order;
 import com.sonia.entities.User;
 import com.sonia.pageLogics.EditUserLogic;
+import com.sonia.entityHandlers.OrderHandler;
 import com.sonia.pageLogics.ViewHistoryLogic;
 
 public class UserCenterControllerTest {
@@ -33,6 +34,7 @@ public class UserCenterControllerTest {
 	ViewHistoryLogic viewHistoryLogic;
 	@Mock
 	EditUserLogic editUserLogic;
+	OrderHandler orderHandler;
 	@Mock
 	List<Order> mockOrderList;
 	@Mock
@@ -45,6 +47,7 @@ public class UserCenterControllerTest {
 	UserCenterController userCenterController = new UserCenterController();
 
 	int orderId = 101;
+	double totalAmount = 122350.0;
 	
 	@Before
 	public void setup() {
@@ -72,9 +75,11 @@ public class UserCenterControllerTest {
 	@Test
 	public void viewOrderDetail_should_assign_order_to_the_request_then_return_view_order_detail_page() {
 		when(viewHistoryLogic.viewOrderDetail(orderId, session)).thenReturn(mockOrder);
+		when(orderHandler.calculateOrderTotalCost(mockOrder)).thenReturn(totalAmount);
 		
 		String result = userCenterController.viewOrderDetail(orderId, request, session);
 	
+		verify(request).setAttribute("totalAmount", totalAmount);
 		verify(request).setAttribute("order", mockOrder);
 		assertEquals("viewOrderDetail", result);
 	}

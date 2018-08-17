@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.sonia.entities.Order;
 import com.sonia.entities.User;
 import com.sonia.pageLogics.EditUserLogic;
+import com.sonia.entityHandlers.OrderHandler;
 import com.sonia.pageLogics.ViewHistoryLogic;
 
 @Controller
@@ -25,6 +26,8 @@ public class UserCenterController {
 	ViewHistoryLogic viewHistoryLogic;
 	@Resource(name="editUserLogic")
 	EditUserLogic editUserLogic;
+	@Resource(name="orderHandler")
+	OrderHandler orderHandler;
 	
 	@RequestMapping(value="/userCenter")
 	public String goToUserCenter(HttpServletRequest request, HttpSession session) {
@@ -43,6 +46,8 @@ public class UserCenterController {
 	public String viewOrderDetail(@RequestParam("id") int orderId, HttpServletRequest request, HttpSession session){
 		Order order = viewHistoryLogic.viewOrderDetail(orderId, session);
 		request.setAttribute("order", order);
+		double totalAmount = orderHandler.calculateOrderTotalCost(order);
+		request.setAttribute("totalAmount", totalAmount);
 		
 		return "viewOrderDetail";
 	}
